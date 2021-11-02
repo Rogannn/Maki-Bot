@@ -1,0 +1,99 @@
+{"dialogs": [
+        {"tag": "admission_application_approved",
+          "triggers": ["if my admission application was approved", "that admission application is approved"],
+          "responses": ["You will receive a notification through your submitted email that your application has been approved. You will also receive a temporary student number, student account number and unique passcode. Link and instructions for the next procedure is also provided in the notification."],
+          "context_set": "approved_application"
+        },
+        {"tag": "admission_application_submitted",
+          "triggers": ["if my admission application was successfully submitted",
+                        "that admission application is successfully submitted"],
+          "responses": ["Once you successfully submitted your application, you will receive a notification with pooling number in your submitted email address. Pooling number is NOT your student number; at this stage your application is being processed."],
+          "context_set": "submitted_application"
+        },
+        {"tag": "admission_application_requirements",
+          "triggers": ["what are the requirements for admission application"],
+          "responses": ["Visit our official university website www.dhvsu.edu.ph for the complete lists of admission requirments and downloadable forms."],
+          "context_set": "application_requirement"
+        },
+        {"tag": "admission_application",
+          "triggers": ["can i proceed with admission application even if i don't have all the requirements"],
+          "responses": ["NO, only applicants with complete requirements will be processed."],
+          "context_set": "no_requirements"
+        },
+        {"tag": "application_teaching",
+          "triggers": ["do you accept applicants for methods of teaching"],
+          "responses": ["YES, application via online student portal is on March 16 - April 30, 2021 visit our official university website www.dhvsu.edu.ph for downloadable application form. ->Requirements: ->1. Properly accomplished application form with passport size photo ->2. Certified True Copy of Transcript of Records (Applicant must be a degree holder) ->3. PSA Birth Certificate ->4. PSA Marriage certificate for married female applicant"],
+          "context_set": "applicants_for_teaching"
+        },
+        {"tag": "student_admission",
+          "triggers": ["how to apply for student admission"],
+          "responses": ["Visit DHVSU Office of Admission FB page. Click the link for Student Application Portal, then properly accomplish all the information in the portal. Upload the pdf copy of properly labelled admission requirements(Surname_Given Name_Middle Initial Program Applying For_Document type).->Sample file name format:->Briones Richard N BS PSYCHOLOGY Application Form->Briones Richard N BS PSYCHOLOGY Report Card/Transcript of Record->Briones Richard N BS PSYCHOLOGY PSA Birth Certificate"],
+          "context_set": "apply_student_admission"
+        },
+        {"tag": "2nd_sem_transferees_2020-2021",
+          "triggers": ["do you accept transferees for 2nd Semester AY 2020-2021"],
+          "responses": ["YES, visit our official university website www.dhvsu.edu.ph for the complete lists of admission requirements and downloadable forms."],
+          "context_set": "transferees_for_2nd_sem_ay_2020-2021"
+        },
+        {"tag": "lrn_meaning",
+          "triggers": ["what is learners reference number",
+                        "what is lrn"],
+          "responses": ["LRN is only applicable to Junior High School and Senior High School applicants. For those applicants not under these categories, just put zero (0) under the LRN field."],
+          "context_set": "lrn"
+        },
+        {"tag": "junior_high_school",
+          "triggers": ["junior high school"],
+          "responses": ["Chosen Category: JUNIOR HIGH SCHOOL : What do you want to ask?"],
+          "context_set": "jhs"
+        },
+        {"tag": "senior_high_school",
+          "triggers": ["senior high school"],
+          "responses": ["Chosen Category: SENIOR HIGH SCHOOL : What do you want to ask?"],
+          "context_set": ""
+        },
+        {"tag": "college",
+          "triggers": ["college"],
+          "responses": ["Chosen Category: COLLEGE : What do you want to ask?"],
+          "context_set": ""
+        },
+        {"tag": "college_graduate",
+          "triggers": ["college graduate"],
+          "responses": ["Chosen Category: COLLEGE GRADUATE : What do you want to ask?"],
+          "context_set": ""
+        },
+        {"tag": "others",
+          "triggers": ["other", "others"],
+          "responses": ["Chosen Category: OTHERS : What do you want to ask?"],
+          "context_set": ""
+        },
+        {"tag": "greeting",
+          "triggers": ["hi", "hello", "greetings", "good morning", "good afternoon", "good evening", "good day"],
+          "responses": ["Hello!", "Hi!", "Hello! How can i help you?"],
+          "context_set": ""
+        },
+        {"tag": "goodbye",
+          "triggers": ["goodbye", "bye"],
+          "responses": ["Have a nice day!", "Bye! Come back again soon!"]
+        },
+        {"tag": "thanks",
+          "triggers": ["ok thanks", "thank you", "ty", "thnx"],
+          "responses": ["No problem!", "Your welcome!", "My pleasure.", "Happy to help!"]
+        },
+        {"tag": "ok",
+          "triggers": ["ok", "k", "okay", "oke", "oki"],
+          "responses": ["Okay!"]
+        },
+        {"tag": "amazed",
+          "triggers": ["wow", "waw", "amazing", "incredible", "good", "very good", "outstanding"],
+          "responses": ["Thanks!", "Hehe.", "Thank you!"]
+        },
+        {"tag": "agreed",
+          "triggers": ["yes", "yeah", "ye", "yep", "yup", "agree"],
+          "responses": ["Thanks!", "Thank you!"]
+        },
+        {"tag": "gratitude",
+          "triggers": ["your welcome", "welcome", "wc", "np", "no problem"],
+          "responses": ["Okay!"]
+        }
+    ]
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<head>
+    <title>Admin - Maki Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style-admin.css') }}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body onload="checkCookie()">
+
+<div class="navbar">
+  <div class="admission-logo"></div>
+  <p id="logged-in-as">Logged in as {{ session['user_role'] }}: {{ session['username'] }}</p>
+  <a href="home-admin">Conversations</a>
+  <div class="dropdown">
+      <p class="drop">Accounts<span class="glyphicon glyphicon-menu-down"></span></p>
+      <div class="dropdown-content">
+          <a href="contact-account">Contacts</a>
+          <a href="admin-account">Administrators</a>
+      </div>
+  </div>
+  <a href="/admin/admin-logout">Logout<i class="fa-solid fa-right-from-bracket"></i></a>
+</div>
+
+	<div class="card mb-sm-3 mb-md-0 contacts_card">
+        <div class="card-header">
+            <div class="input-group">
+                <input type="text" placeholder="Search by Name or Email" name="" class="form-control search">
+            </div>
+        </div>
+		<div class="card-body contacts_body">
+		<h3 id="panel-title">Administrators</h3>
+			<span class="reminder">
+				<span class="glyphicon glyphicon-info-sign"></span>
+				Passwords are encrypted for security purposes. Make sure to remember your passwords.
+			</span>
+		    <table id="panel">
+		      <thead>
+		          <tr>
+                  <th>First Name</th>
+                  <th>Middle Initial</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+		              <th>Username</th>
+		              <th>Password</th>
+		              <th class="modify-tab">Options</th>
+		          </tr>
+		      </thead>
+		        <tbody id="admin-table">
+		          {% for admin in admins %}
+		          <tr>
+                  <td>{{ admin.firstname }}</td>
+                  <td>{{ admin.middle }}</td>
+                  <td>{{ admin.lastname }}</td>
+                  <td>{{ admin.email }}</td>
+		              <td>{{ admin.username }}</td>
+		              <td>{{ admin.password }}</td>
+		              <td class="modify-tab">
+		                  <a href="{{ url_for('delete_admin', admin_id=admin.id ) }}"
+		                      onclick="return confirm('Are you sure you want to delete {{ admin.username }}?');" title="Delete this account">
+		                      <i class="glyphicon glyphicon-trash"></i>
+		                  </a>
+		              </td>
+		          </tr>
+		          <script type="text/javascript">
+		              $(".update-info").on('click',  function() {
+                          $('.admin-firstname').val('{{ admin.firstname }}');
+                          $('.admin-middlename').val('{{ admin.middle }}');
+                          $('.admin-lastname').val('{{ admin.lastname }}');
+                          $('.admin-email').val('{{ admin.email }}');
+                          $('.admin-username').val('{{ admin.username }}');
+                          $('.admin-password').val('{{ admin.password }}');
+		              });
+		          </script>
+		          {% endfor %}
+		          <tr>
+			          {% with messages = get_flashed_messages() %}
+						        {% if messages %}
+					                {% for message in messages %}
+					                    <div class="message_flash">{{ message }}</div>
+					                {% endfor %}
+						        {% endif %}
+						    {% endwith %}
+								<form method="POST" id="input-form">
+						        <td><input name="fname" type='text' class="account-input" placeholder='First Name' required></td>
+						        <td><input name="mname" type='text' class="account-input" placeholder='Middle Initial' required></td>
+						        <td><input name="lname" type='text' class="account-input" placeholder='Last Name' required></td>
+								    <td><input name='mail' type='email' class="account-input" placeholder='Email' required></td>
+								    <td><input type='text' name='uname' class="account-input" placeholder='Username' required></td>
+								    <td><input type='password' name='pass' class="account-input" placeholder='Password' required></td>
+								    <td><button type="submit" id="submit-btn"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button></td>
+								</form>
+							</tr>
+		        </tbody>
+		    </table>
+			
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+			$(".message_flash").fadeOut(3000);
+			// $("#div2").fadeOut("slow");
+			// $("#div3").fadeOut(3000);
+			$(".reminder").fadeOut(10000);
+
+			$(".form-control.search").on("keyup", function() {
+	      var value = $(this).val().toLowerCase();
+	      $("#admin-table tr").filter(function() {
+	        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	      });
+	    });
+
+	});
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  function checkCookie() {
+    username = "{{session['username']}}";
+    let user = getCookie("username");
+    setCookie("username", user, 365);
+  }
+
+</script>
+</html>
