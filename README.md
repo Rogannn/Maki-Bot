@@ -2,11 +2,14 @@
 Web-based A.I. Chatbot using NLP with Tensorflow for DHVSU Admission Inquiries
 
 
+Run launcher.py to use
+
+
 # Current problems occuring when running Maki Bot:
 They only appear for certain reasons that can be easily avoided and not have bad effect.
-1. When applicant logins using google account, it will trigger a early token warning.
+1. When applicant logins using google account, it will trigger a early token warning. This problem might only happen specifically on my laptop.
 
-- REASON: When I used ccleaner to clean cache of my laptop
+- REASON: When I used ccleaner to clean cache of my laptop, the time gets out of sync a little bit
 
 - FIX: re-sync date and time
 
