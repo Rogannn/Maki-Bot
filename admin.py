@@ -3,7 +3,7 @@ from functools import wraps
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_socketio import SocketIO, join_room, emit, leave_room
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.sql.expression import func
+from datetime import timedelta
 import datetime
 from flask_security import Security
 from flask_security.utils import hash_password, verify_password
@@ -48,6 +48,11 @@ def login_required(f):
     return wrap
 
 
+@app.route('/callback')
+def callback():
+    return redirect('/admin/home-admin')
+
+
 @app.route("/", methods=["GET", "POST"])
 def login_page():
     ''' INDEX + LOGIN PAGE '''
@@ -69,8 +74,7 @@ def login_page():
                 session["logged_in"] = True
                 session["username"] = admin_dict.get('username')
                 session["user_role"] = "Admin"
-                admin_datastore.toggle_active(admin_user)
-                return redirect(url_for("home"))
+                return redirect(url_for("callback"))
         except AttributeError:
             try:
                 contact_dict = dict((col, getattr(contact_user, col)) for col in contact_user.__table__.columns.keys())
@@ -80,8 +84,7 @@ def login_page():
                     session["logged_in"] = True
                     session["username"] = contact_dict.get('username')
                     session["user_role"] = "Contact"
-                    contact_datastore.toggle_active(contact_user)
-                    return redirect(url_for("home"))
+                    return redirect(url_for("callback"))
             except AttributeError:
                 flash("Username or Password is incorrect.")
                 return redirect(url_for("login_page"))
@@ -92,18 +95,47 @@ def login_page():
 @app.route("/home-admin", methods=["GET", "POST"])
 @login_required
 def home():
-    ''' SHOW ACCOUNTS '''
+    ''' QUERY ALL DATABASES '''
+    print(session["username"])
     admin = AdminLogin.query.all()
+    contacts = Contacts.query.all()
     logged_user = LoggedInUsers.query.all()
-    msg_email = [msg.msg_session for msg in ChatLog.query.all()]
-    msg_answered = [msg.active for msg in ChatLog.query.all()]
     test = ChatLog.query.all()
 
-    max_logins = db.session.query(func.max(LoggedInUsers.id)).scalar()
-    num_of_users = db.session.query(LoggedInUsers).filter(LoggedInUsers.id == max_logins).all()
+    admin_user = AdminLogin.query.filter_by(username=session['username']).first()
+    contact_user = Contacts.query.filter_by(username=session['username']).first()
+
+    if session["user_role"] == "Admin":
+        for a in admin:
+            if a.active and a.username == session['username']:
+                admin_datastore.toggle_active(admin_user)
+                db.session.commit()
+    else:
+        for c in contacts:
+            if c.active and c.username == session['username']:
+                contact_datastore.toggle_active(contact_user)
+                db.session.commit()
+
+    online_admins_indicator(session["username"])
+
+    ''' FOR ALERTING NEW QUERY '''
+    msg_email = [msg.msg_session for msg in ChatLog.query.all()]
+    msg_answered = [msg.active for msg in ChatLog.query.all()]
+
+    ''' COMPUTING TOTAL NUMBERS OF ALL ACCOUNTS '''
+    admin_count = []
+    contact_count = []
+    applicant_count = []
+    for user in admin:
+        admin_count.append(user.id)
+    for user in contacts:
+        contact_count.append(user.id)
+    for user in logged_user:
+        applicant_count.append(user.id)
 
     return render_template("home-admin.html", logged_user=logged_user, admin=admin, test=test,
-                           num_of_users=num_of_users, msg_email=msg_email, msg_answered=msg_answered)
+                           applicant_count=len(applicant_count), msg_email=msg_email, msg_answered=msg_answered,
+                           contacts=contacts, contact_count=len(contact_count), admin_count=len(admin_count))
 
 
 @app.route("/show_message/<email>", methods=["GET", "POST"])
@@ -298,6 +330,18 @@ def get_admin_message():
     return admin_message
 
 
+# admins = contact and admin, admin = admin only
+@socket_.on('online_admins')
+def online_admins_indicator(data):
+    print("online_admins_indicator is called.")
+    socket_.emit('on_admins_indicator', data, broadcast=True)
+
+
+@socket_.on('offline_admins')
+def offline_admins_indicator(data):
+    socket_.emit('off_admins_indicator', data, broadcast=True)
+
+
 @socket_.on('join')
 def on_join(data):
     room = data['channel']
@@ -314,6 +358,20 @@ def on_leave(data):
     print(f"Admin has left the room: {room}")
 
 
+@socket_.on('disconnect')
+def disconnect_user():
+    print("admin has disconnected")
+    admin_user = AdminLogin.query.filter_by(username=session['username']).first()
+    admin_db = AdminLogin.query.all()
+    for a in admin_db:
+        if not a.active and a.username == session['username']:
+            admin_datastore.toggle_active(admin_user)
+
+    session.pop("logged_in")
+    session.pop("user_role")
+    session.pop("username")
+
+
 @socket_.on('send_message')
 def handle_send_message_event(data):
     socket_.emit('receive_message', data, room=data['room'])
@@ -323,3 +381,10 @@ def handle_send_message_event(data):
 def handle_message_alert_event(data):
     print("Message alert received in admin")
     socket_.emit('message_alert', data, broadcast=True)
+
+
+'''@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1)'''
+
