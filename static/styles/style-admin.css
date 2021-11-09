@@ -6,6 +6,23 @@ body,html{
 	    background: linear-gradient(to right, #5c0017, #ff4d79, #5c0017);
 	    --login-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 		}
+		.glyphicon.glyphicon-trash.grey {
+			color: grey;
+		}
+
+		.offline-indicator {
+			float: right;
+			color: #4d0000;
+		}
+		.admin-offline-indicator {
+			float: right;
+			color: #4d0000;
+		}
+		.contact-offline-indicator {
+			float: right;
+			color: #4d0000;
+		}
+
 		/* ADD ACCOUNT DROPDOWN FORM */
 		.add-dropbtn {
 		  background-color: #3498DB;
@@ -266,6 +283,7 @@ body,html{
 			color: white;
 			padding: 5px;
 			text-align: center;
+			cursor: context-menu;
 			background-color: rgb(245, 245, 0, 0.2);
 		}
 		#panel {
@@ -281,9 +299,13 @@ body,html{
 			color: white;
 			overflow-x: auto;
 			text-align: center;
-		  	border-bottom: 2px solid rgb(245, 245, 0, 0.2);
+			border-top: 1px solid rgb(92, 0, 23, 0.5);
+			border-bottom: 1px solid rgb(92, 0, 23, 0.5);
 		}
 		#panel td:hover {
+			background-color: rgb(245, 245, 0, 0.2);
+		}
+		#panel tr:hover {
 			background-color: rgb(245, 245, 0, 0.2);
 		}
 		#panel th {
@@ -292,14 +314,16 @@ body,html{
 		  	text-align: center;
 		  	width: 100%;
 		  	color: white;
-		  	border-bottom: 2px solid rgb(245, 245, 0, 0.2);
+			border-top: 1px solid rgb(92, 0, 23, 0.5);
+			border-bottom: 1px solid rgb(92, 0, 23, 0.5);
 		}
 		#input-form {
 			width: 100%;
 		}
 		#panel-users {
 			table-layout: fixed;
-			width: 100%;
+			width: 99%;
+			min-width: 290px;
 		  	border-collapse: collapse;
 		}
 		#panel-users a {
@@ -307,13 +331,18 @@ body,html{
 		}
 		#panel-users td {
 		  	padding: 15px 15px 15px 15px;
+		  	min-width: 20px;
 			color: white;
 			overflow-x: auto;
 		}
-		.active-td {
+		.active-td{
+			border-right: 2px solid #5c0017;
+			border-left: 2px solid #5c0017;
 			background-color: rgb(245, 245, 0, 0.2);
 		}
 		#panel-users td:hover {
+			border-right: 2px solid #5c0017;
+			border-left: 2px solid #5c0017;
 			background-color: rgb(245, 245, 0, 0.2);
 			cursor: pointer;
 		}
@@ -329,47 +358,37 @@ body,html{
 		  	border-collapse: collapse;
 		}
 
-		#panel-admin td, #panel-admin th {
-			width: 42%;
+		#panel-admin {
+			width: 100%;
+		}
+		#panel-contact {
+			width: 100%;
+		}
+		#panel-admin td {
+			width: 1%;
 		  	padding: 8px;
 			color: white;
 			overflow-x: auto;
 		}
-		/* #panel-admin tr:nth-child(even){
-			background-color: rgb(245, 245, 0, 0.2);
+		#panel-contact td {
+		  	padding: 8px;
 			color: white;
-		} */
-		#panel-admin td:hover {background-color: rgb(245, 245, 0, 0.2);}
+			overflow-x: auto;
+		}
 		#panel-admin th {
 		  	padding-top: 12px;
 		  	padding-bottom: 12px;
-		  	text-align: left;
+		  	text-align: center;
 		  	color: white;
 		}
-		#panel-account {
-			width: 100%;
-			margin-top: 110px;
-			background-color: rgb(245, 245, 0, 0.4);
-			table-layout: fixed;
-		  	border-collapse: collapse;
-		}
-		#panel-account td, #panel-account th {
-		  	padding: 8px;
-		  	margin: 20px;
-			color: white;
-			overflow-x: auto;
-			transition: all 500ms;
-		}
-		#panel-account td:hover {
-			border-bottom: 2px solid #ff4d79;
-			cursor: pointer;
-		}
-		#panel-account th {
+		#panel-contact th {
 		  	padding-top: 12px;
 		  	padding-bottom: 12px;
-		  	text-align: left;
+		  	text-align: center;
 		  	color: white;
 		}
+		#panel-admin tr:hover {background-color: rgb(245, 245, 0, 0.2);}
+		#panel-contact tr:hover {background-color: rgb(245, 245, 0, 0.2);}
 		.modify-tab {
 			background-color: background-color: rgb(102, 102, 0);
 		}
@@ -380,6 +399,7 @@ body,html{
 		}
 		.col-md-8.col-xl-6.chat {
 			margin: 0 auto;
+			margin-top: 5px !important;
 			padding: 0;
 		}
 		.messages {
@@ -392,6 +412,8 @@ body,html{
 			padding: 17px;
 			color: white;
 			background-color: rgb(245, 245, 0, 0.2);
+			border-right: 2px solid #5c0017;
+			border-left: 2px solid #5c0017;
 			margin: 0 0 20px 0;
 			border-radius: 0 0 10px 0;
 			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
@@ -406,6 +428,7 @@ body,html{
 			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 		}
 		.messages .msg_container.left {
+			display: inline-block;
 			min-width: 300px;
 			padding: 17px;
 			margin-right: 200px;
@@ -443,12 +466,15 @@ body,html{
 		.card {
 			width: 100% !important;
 			box-shadow: 5px 10px 22px;
-			margin-top: 10px;
 			margin: 0 auto;
+			margin-top: 5px;
 			height: 650px;
+			border-top: 4px solid #5c0017 !important;
 			background-color: rgb(245, 245, 0, 0.4) !important;
 		}
-		.card.applicants {
+		.card.admins {
+			height: 47.4%;
+			max-height: 330px;
 		}
 		.card.chat {
 			width: 100% !important;
@@ -476,6 +502,7 @@ body,html{
 			overflow-y: auto;
 		}
 		.card-header {
+			height: 65px !important;
 			border-radius: 15px 15px 0 0 !important;
 			border-bottom: 0 !important;
 		}
@@ -492,12 +519,17 @@ body,html{
 			width: 50% !important;
 			min-width: 200px !important;
 		}
+		.search.admin, .search.contact {
+			width: 50% !important;
+			padding: 5px;
+			min-width: 200px !important;
+		}
 		
 		.form-control.type_msg {
 			max-width: 85% !important;
 		}
 		.input-group {
-			margin: 20px auto;
+			margin: 10px auto;
 			width: 80% !important;
 			min-width: 160px;
 		}
@@ -539,7 +571,7 @@ body,html{
 		.send_btn:hover {
 			background-color: rgb(245, 245, 0, 0.2) !important;
 		}
-		.search{
+		.search {
 			/* border-radius: 15px 0 0 15px !important; */
 			background-color: rgba(0,0,0,0.3) !important;
 			border:0 !important;

@@ -1,3 +1,4 @@
+from datetime import timedelta
 import datetime
 import pickle
 import random
@@ -88,11 +89,11 @@ class LoggedInUsers(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     log_user_name = db.Column('username', db.String(70))
     log_user_email = db.Column('email', db.String(70))
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=0)
     roles = db.relationship(
         'LoggedRole',
         secondary=logged_role_users,
-        backref=db.backref('LoggedInUsers', lazy='dynamic')
+        backref=db.backref('logged_in_users', lazy='dynamic')
     )
 
 
@@ -300,6 +301,16 @@ def callback():
     session["email"] = id_info.get("email")
     session["picture"] = id_info.get("picture")
 
+    logged_user_exists = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
+    if not logged_user_exists:
+        user_info = LoggedInUsers(log_user_name=session["name"], log_user_email=session["email"])
+        db.session.add(user_info)
+        db.session.commit()
+
+    applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
+    logged_datastore.toggle_active(applicant)
+    db.session.commit()
+
     return redirect("/home")
 
 
@@ -328,7 +339,12 @@ def bot_response(msg):
 
 @server.route("/logout")
 def logout():
+    offline_user_indicator(session["email"])
     session.pop("google_id")
+
+    applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
+    logged_datastore.toggle_active(applicant)
+    db.session.commit()
     return redirect("/")
 
 
@@ -337,21 +353,20 @@ def index():
     return render_template("index.html")
 
 
+@server.route("/help")
+def help_route():
+    return render_template("help.html")
+
+
 @server.route("/home")
 @login_is_required
 def home():
     user_email = session['email']
-    user_name = session['name']
 
     messages = ChatLog.query.filter(ChatLog.msg_session.endswith(user_email)).all()
     roles = ChatLog.query.filter(ChatLog.user_role.endswith("client")).all()
 
-    logged_user_exists = LoggedInUsers.query.filter_by(log_user_email=user_email).first()
-    if not logged_user_exists:
-        user_info = LoggedInUsers(log_user_name=user_name, log_user_email=user_email)
-        db.session.add(user_info)
-        db.session.commit()
-
+    online_user_indicator(user_email)
     return render_template("home.html", room_id=user_email, roles=roles, messages=messages)
 
 
@@ -431,12 +446,43 @@ def handle_message_alert_event(data):
     return "sent"
 
 
+@socket_.on('online_user')
+def online_user_indicator(data):
+    socket_.emit('online_indicator', data, broadcast=True)
+
+
+@socket_.on('offline_user')
+def offline_user_indicator(data):
+    socket_.emit('offline_indicator', data, broadcast=True)
+
+
 @socket_.on('join')
 def on_join(data):
     room = data['channel']
     join_room(room)
     emit("Room: " + str(room), room=room)
     print(f"joined the room: {room}")
+
+
+@socket_.on('disconnect')
+def disconnect_user():
+    print(f"{session['username']}: has disconnected.")
+    '''admin_user = AdminLogin.query.filter_by(username=session['username']).first()
+    admin_db = AdminLogin.query.all()
+    for a in admin_db:
+        if not a.active and a.username == session['username']:
+            admin_datastore.toggle_active(admin_user)
+            db.session.commit()'''
+
+    session.pop("logged_in")
+    session.pop("user_role")
+    session.pop("username")
+
+
+'''@server.before_request
+def make_session_permanent():
+    session.permanent = True
+    server.permanent_session_lifetime = timedelta(minutes=1)'''
 
 
 contact_security = Security(server, contact_datastore, login_form=server.route("/login"))

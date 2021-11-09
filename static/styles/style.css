@@ -20,6 +20,96 @@
       background: no-repeat;
     }
 
+    #gif-style {
+      border-top: 4px solid #d7a51e;
+      border-bottom: 4px solid #d7a51e;
+      border-right: 4px solid #5c0017;
+      border-left: 4px solid #5c0017;
+    }
+
+    #how-to-use {
+      border-bottom: 2px solid #d7a51e;
+      border-right: 2px solid #d7a51e;
+    }
+
+    .help-btn-in-msger {
+      float: left;
+      color: #4d4dff;
+      cursor: pointer;
+    }
+    .help-btn-in-msger:hover {
+      color: #9999ff;
+    }
+
+    .fb-link {
+      color: blue;
+      cursor: pointer;
+    }
+
+    .help-container {
+      width: 70%;
+      min-width: 500px;
+      margin: 50px auto;
+    }
+    .choice-btn {
+      cursor: pointer;
+    }
+    .choice-btn:hover {
+      color: blue;
+    }
+
+    .switch {
+      float: right;
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 28px;
+    }
+
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: red;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: green;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
     .reset-button {
       margin-left: 10px;
       background: rgb(0, 165, 0);
@@ -33,7 +123,7 @@
     }
 
     .intro {
-      text-align: justify;
+      text-align: center;
       width: 80%;
       min-width: 484px;
       padding: 20px 50px 140px 50px;
@@ -41,18 +131,15 @@
       color: white;
       background-color: #33000d;
     }
-    .intro p {
-      margin: 0 auto;
-    }
-    .direct-to-maki-btn {
-      padding: 15px;
-      width: 110px;
-      margin: 20px auto;
+    .intro-btn {
+      width: 140px;
+      height: 50px;
+      margin: 15px;
       border: 0;
       box-shadow: 2px 2px;
       background-color: #d7a51e;
     }
-    .direct-to-maki-btn:hover {
+    .intro-btn:hover {
       cursor: pointer;
       box-shadow: 0;
       background-color: #9d7915;
@@ -260,7 +347,7 @@
       /* display: flex; */
       font-size: medium;
       justify-content: space-between;
-      padding: 20px;
+      padding: 15px;
       text-align: center;
       border-bottom: var(--border);
       background: #5c0017;
