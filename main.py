@@ -1,10 +1,8 @@
-from datetime import timedelta
 import datetime
 import pickle
 import random
 
 import numpy as np
-import oauthlib
 from tensorflow.keras.models import load_model
 
 # SETUP THE WEB PAGE
@@ -15,7 +13,6 @@ import json
 import nltk
 import requests
 import google.auth.transport.requests
-import email_validator
 import bcrypt
 # nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
@@ -307,9 +304,12 @@ def callback():
         db.session.add(user_info)
         db.session.commit()
 
+    applicant_db = LoggedInUsers.query.all()
     applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
-    logged_datastore.toggle_active(applicant)
-    db.session.commit()
+    for a in applicant_db:
+        if not a.active and a.log_user_email == session['email']:
+            logged_datastore.toggle_active(applicant)
+            db.session.commit()
 
     return redirect("/home")
 
@@ -415,8 +415,11 @@ def handle_send_message_event(data):
 @socket_.on('message_received')
 def handle_message_alert_event(data):
     if acc < 0.8:
-        chat_user = ChatLog.query.filter_by(msg_session=session['email']).first()
-        chat_datastore.toggle_active(chat_user)
+        try:
+            chat_user = ChatLog.query.filter_by(msg_session=session['email']).first()
+            chat_datastore.toggle_active(chat_user)
+        except KeyError:
+            return "Currently sending email from the Admin."
         print("Probability is below 80%.")
         print("Message alert received in main.")
         socket_.emit('message_alert', data, broadcast=True)

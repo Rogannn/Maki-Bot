@@ -3,10 +3,10 @@ from functools import wraps
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_socketio import SocketIO, join_room, emit, leave_room
 from sqlalchemy.exc import IntegrityError
-from datetime import timedelta
 import datetime
 from flask_security import Security
 from flask_security.utils import hash_password, verify_password
+from flask_mail import Mail, Message
 from main import db, ChatLog, LoggedInUsers, Contacts, AdminLogin, contact_datastore, admin_datastore, chat_datastore
 
 app = Flask(__name__)
@@ -25,11 +25,21 @@ app.config['SQLALCHEMY_BINDS'] = {
     'to_notify': 'sqlite:///db/contacts.sqlite3',
     'logged_in': 'sqlite:///db/logged_users.sqlite3'
 }
+mail_settings = {
+    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": 'makibotmail@gmail.com',
+    "MAIL_PASSWORD": 'P@$$W012DF012M@K1130T'
+}
 
 db.init_app(app)
 db.create_all(bind=['all_chats', 'to_login', 'to_notify', 'logged_in'])
 
 sec = Security()
+app.config.update(mail_settings)
+mail = Mail(app)
 
 contact_security = Security(app, name=contact_datastore, login_form=app.route("/"))
 admin_security = Security(app, name=admin_datastore, login_form=app.route("/"))
@@ -237,50 +247,6 @@ def logout():
     return redirect(url_for("login_page"))
 
 
-@app.route("/update_contact/<contact_id>", methods=["GET", "POST"])
-@login_required
-def update_contact(contact_id):
-    flash("Edit using the textbox below")
-    ''' EDIT NAME AND EMAIL '''
-    info = Contacts.query.filter_by(id=contact_id).first()
-    if info:
-        db.session.delete(info)
-        db.session.commit()
-
-    if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-
-        db.session.add(name=name)
-        db.session.add(email=email)
-
-        db.session.commit()
-
-    return redirect(url_for('contact_account'))
-
-
-@app.route("/update_admin/<admin_id>", methods=["GET", "POST"])
-@login_required
-def update_admin(admin_id):
-    flash("Edit using the textbox below")
-    ''' EDIT NAME AND EMAIL '''
-    info = AdminLogin.query.filter_by(id=admin_id).first()
-    if info:
-        db.session.delete(info)
-        db.session.commit()
-
-    if request.method == "POST":
-        uname = request.form["uname"]
-        passw = request.form["passw"]
-
-        db.session.add(username=uname)
-        db.session.add(password=passw)
-
-        db.session.commit()
-
-    return redirect(url_for('admin_account'))
-
-
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])
 @login_required
 def delete_contact(contact_id):
@@ -326,6 +292,17 @@ def get_admin_message():
                          msg_session=user_email, user_role=admin_role)
     db.session.add(admin_chat)
     db.session.commit()
+
+    applicant_db = LoggedInUsers.query.all()
+    for a in applicant_db:
+        if not a.active and a.log_user_email == user_email:
+            admin_msg = Message('Hello! This is Maki Bot from DHVSU Admissions Office',
+                                sender=app.config.get("MAIL_USERNAME"),
+                                recipients=[user_email]
+                                )
+            admin_msg.body = f"The answer to your question by the Admissions Office is: \n'{admin_message}'" \
+                             "\n\nYou can check the website here at http://127.0.0.1:5000/home."
+            mail.send(admin_msg)
 
     return admin_message
 
@@ -387,4 +364,3 @@ def handle_message_alert_event(data):
 def make_session_permanent():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)'''
-

@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 </head>
 <body>
 
@@ -20,9 +20,10 @@
 </div>
 
 <div class="intro">
-    <h2>About Maki</h2>
-    <p><b>Maki Bot</b> is an <b>Artificial Intelligent</b> Chatbot designed to answer admission related queries that uses <b>Natural Language Processing</b> for understanding human language and a <b>Machine Learning</b> library called <b>Tensorflow</b> for understanding the context of the text-input or intent of the user.</p>
-    <button class="direct-to-maki-btn" onclick="scrollToChat()">Ask now!</button>
+    <h2>Maki Bot</h2>
+    <p><b>Maki</b> can answer your admission related queries quickly but using only english language. But instead of typing, you can choose first on which categories you are and then you can select which queries you want an answer with just by clicking them.<br><br> If your question is not included, you can type your question in the textbox and send it so that Maki Bot will notify the Admission's Office and you can wait for them to answer your question.<br><br>To use Maki Bot, click the 'Ask Now!' button.<br>To know how to use Maki Bot, click the 'help' button.</p>
+    <button class="intro-btn" onclick="scrollToChat()">Ask now!</button>
+    <button class="intro-btn" onclick="window.open('/help')">Help?</button>
 </div>
 
     <section class="announcement-container">
@@ -58,7 +59,12 @@
     <div class="msger">  
         <header class="msger-header">
             <div class="msger-header-title">
-              <b> Maki Bot </b><input onclick="toggleBotResponse()" id="toggleBotResponseButton" value="Turn off Maki Bot responses"></input>
+              <p class="help-btn-in-msger" onclick="window.open('/help')">Help?</p>
+              <span><b> Maki Bot </b></span>
+              <label class="switch">
+                <input type="checkbox" onclick="toggleBotResponse()" id="toggleBotResponseButton" checked title="Toggle MakiBot response">
+                <span class="slider"></span>
+              </label>
             </div>
         </header>
         <main class="msger-chat">
@@ -132,13 +138,10 @@
     <div class="footer">
         <p>Maki Bot 2021</p>
         <span>
-          <i class="fa-brands fa-facebook">
-          <a onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a></i>
+          <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
         </span>
     </div>
 </div>
-  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
 
@@ -148,29 +151,14 @@
     socket.on('connect', socket => {
       console.log("Client has connected.");
     });
-    
-    function unfade(element) {
-        var op = 0.1;  // initial opacity
-        element.style.display = 'block';
-        var timer = setInterval(function () {
-            if (op >= 1){
-                clearInterval(timer);
-            }
-            element.style.opacity = op;
-            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-            op += op * 0.1;
-        }, 10);
-    }
 
     function toggleBotResponse() {
       var elem = document.getElementById("toggleBotResponseButton");
       if(makibot_enabled == true) {
         makibot_enabled = false;
-        elem.value = "Turn on Maki Bot responses";
         console.log("now false")
-      }else {
+      } else {
         makibot_enabled = true;
-        elem.value = "Turn off Maki Bot responses";
         console.log("now true")
       }
     }
@@ -183,7 +171,6 @@
       socket.emit('join', {
         channel: room
       });
-      console.log(room);
     });
 
     var client = "client";

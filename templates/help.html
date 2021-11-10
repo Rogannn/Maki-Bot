@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <title>Home - Maki Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="navbar">
+    <img src="{{ session['picture'] }}" alt="Profile Picture">
+    <p>{{ session["name"] }}</p>
+    <a href="/home">Go back &nbsp;|</a>
+</div>
+
+<div class="help-container">
+    <div class="help-content">
+        <h2 id="how-to-use">How to use Maki Bot</h2>
+        <p>Maki Bot is a chatbot that is almost the same with other chatbots. But there is a little bit of difference that you need to learn about before using it. <br><br>You will later learn how to use the toggle of Maki Bot responses where you can deliberately turn on or off its responses to your messages. Why is this important? Because when you need to directly talk with the Admissions Office wether the reason is Maki Bot cannot answer your question or you just want to ask the Admissions Office directly without asking Maki Bot, you will need to turn off its responses because it answers every one of your messages and that will be problematic as you really need to chat the Admissions Office directly.</p>
+        <li class="choice-btn" onclick="choice1()">Query Category</li>
+        <li class="choice-btn" onclick="choice2()">Query Not included</li>
+        <li class="choice-btn" onclick="choice3()">Toggle Maki Responses</li>
+        <li class="choice-btn" onclick="choice4()">Reset Button</li>
+        <li class="choice-btn" onclick="choice5()">End</li>
+
+        <br><h4 id="how-to-use">Query Category</h4>
+        <p>When you first arrive at the home page, you can click the 'Ask Now!' button to automatically scroll to Maki Bot or you can manually scroll it. <br><br> When asking for question, you should choose which category you are: "Junior High school", "Senior High school", "College", "College Graduate", or if you are not one of those, click "Others" and type in the textbox your question.</p>
+        <img src="../static/styles/gif/query-categories.gif" id="gif-style">
+        <p>You will receive a message from Maki Bot letting you choose which questions you want to have an answer with. But if your question is not in the choices, you can wait for the Admissions Office to answer your question instead.</p>
+
+        <br><h4 id="how-to-use">Not included</h4>
+        <p>If the question you want to ask is not one of the choices, you can type your question in the textbox and send the message so that Maki Bot will let the Admissions Office know about your question and you wait for them to answer.</p>
+        <img src="../static/styles/gif/unknown-query.gif" id="gif-style">
+        <p> While you wait for Admissions Office, you can logout and return later. Just don't forget to turn off the Maki Bot responses when chatting with Admissions Office.</p>
+
+        <br><h4 id="how-to-use">Toggle Maki responses</h4>
+        You should click the toggle button in the top right side to turn off Maki Bot responses while you are chatting with the Admissions Office.</p>
+        <img src="../static/styles/gif/toggle.gif" id="gif-style">
+        <p>You can click again the toggle button to turn it on if you need to.</p>
+
+        <br><h4 id="how-to-use">Reset Button</h4>
+        <p>When you want to choose again which questions you want to have an answer with, click the 'Reset' button right beside the 'Send' button. </p>
+        <img src="../static/styles/gif/reset.gif" id="gif-style">
+        <p>Reset button makes Maki Bot resend its previous message that lets you choose the category and questions.</p>
+
+        <br><h4 id="how-to-use">End</h4>
+        <p><br>That is all for this tutorial, these are pretty simple features that you can easily get used to. We hope that you get the answer you are looking for! Just don't forget that you can only ask Admission related inquiries here.</p>
+    </div>
+</div>
+<div class="footer">
+    <p>Maki Bot 2021</p>
+    <span>
+      <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
+    </span>
+</div>
+
+<script type="text/javascript">
+    
+    function choice1() { $("html, body").scrollTop($('html, body').get(0).scrollHeight-2600); }
+    function choice2() { $("html, body").scrollTop($('html, body').get(0).scrollHeight-1990); }
+    function choice3() { $("html, body").scrollTop($('html, body').get(0).scrollHeight-1450); }
+    function choice4() { $("html, body").scrollTop($('html, body').get(0).scrollHeight-950); }
+    function choice5() { $("html, body").scrollTop($('html, body').get(0).scrollHeight-500); }
+
+</script>
+
+</body>
+</html>

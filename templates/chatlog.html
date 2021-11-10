@@ -26,12 +26,6 @@
                 {% endfor %}
             </div>
         </div>
-        <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-        <div class="action_menu chat">
-            <ul>
-                <li><a href="/delete_all_chats" onclick="return confirm('Are you sure you want to clear all messages?');" title="Clear all chats">Clear messages</a></li>
-            </ul>
-        </div>
     </div>
     <main class="card-body msg_card_body">
         <div class="img_cont_msg">
@@ -219,7 +213,7 @@
   function checkCookie() {
     username = "{{session['username']}}";
     let user = getCookie("username");
-    setCookie("username", user, 365);
+    setCookie("username", username, 365);
   }
 
 </script>

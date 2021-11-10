@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style-admin.css') }}">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -15,6 +14,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 </head>
 <body onload="checkCookie()">
 
@@ -49,18 +50,17 @@
                     </div>
                 </div>
                 <div class="card-body contacts_body">
-                    {% for num in num_of_users %}
-                    <h3 id="panel-title">Applicants ({{ num.id }})</h3>
-                    <span class="reminder">If one of the exclamation marks turns red, <br> &nbsp;a query is needed to be answered.</span>
-                    {% endfor %}
+                    <p class="panel-title"><b>Applicants</b> ({{ applicant_count }})</p>
                         <table id="panel-users">
                         <thead>
                         </thead>
                         {% for user in logged_user %}
                             <tbody>
                                 <tr>
-                                    <td class="toggle-btn" onclick="$('.card.chat').load('{{ url_for('show_message', email=user.log_user_email) }}'); location.href='#applicant={{ user.log_user_email }}'"><span class="glyphicon glyphicon-exclamation-sign"></span>
-                                        {{ user.log_user_name }} <p class="email"> {{ user.log_user_email }} </p>
+                                    <td class="toggle-btn" id="users" onclick="$('.card.chat').load('{{ url_for('show_message', email=user.log_user_email) }}'); location.href='#applicant={{ user.log_user_email }}'">
+                                      <span class="offline-indicator">Offline</span>
+                                      <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                      {{ user.log_user_name }} <p class="email"> {{ user.log_user_email }} </p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -78,14 +78,6 @@
                       <div class="user_info">
                           <span> Chat Log </span> 
                       </div>
-                  </div>
-                  <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-                  <div class="action_menu chat">
-                      <ul>
-                          <li><a href="/delete_all_chats" onclick="return confirm('Are you sure you want to clear all messages?');" title="Clear all chats">Clear messages</a></li>
-                          <li><a href="/delete_all_users"onclick="return confirm('Are you sure you want to clear all users list?');" title="Clear all list of user">Clear users list</a></li>
-                          <li><a href="#">Ban selected user</a></li>
-                      </ul>
                   </div>
               </div>
               <main class="card-body msg_card_body">
@@ -105,13 +97,73 @@
               </main>
           </div>
       </div>
-  </div>
+      <div class="col-md-4 col-xl-3 chat">
+          <div class="card admins">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search by Name or Status" name="" class="search contact">
+                    </div>
+                </div>
+                <div class="card-body contacts_body">
+                    <h3 class="panel-title"><b>Contacts</b> ({{ contact_count }})</h3>
+                        <table id="panel-contact">
+                        <thead>
+                          <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        {% for user in contacts %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                      {{ user.username }}
+                                    </td>
+                                    <td>
+                                      <span class="contact-offline-indicator">Offline</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+          </div>
+          <div class="card admins">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search by Name or Status" name="" class="search admin">
+                    </div>
+                </div>
+                <div class="card-body contacts_body">
+                    <h3 class="panel-title"><b>Administrators</b> ({{ admin_count }})</h3>
+                        <table id="panel-admin">
+                        <thead>
+                          <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        {% for user in admin %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                      {{ user.username }}
+                                    </td>
+                                    <td>
+                                      <span class="admin-offline-indicator">Offline</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-  
-  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
+
     var socket = io.connect('http://' + document.domain + ":" + location.port);
     var room = "{{ room_id }}";
     // CONNECT
@@ -119,7 +171,63 @@
         console.log("Admin has connected.");
     });
 
-    // TOGGLE ACTIVE APPLICANT
+    $(document).ready(function(){
+      socket.emit('join', {
+          channel : room
+      });
+
+      $(".form-control.search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#panel-users tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+
+      $(".search.admin").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#panel-admin tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+
+      $(".search.contact").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#panel-contact tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+
+      // POPUP MENU EVENTS
+      $('#action_menu_btn').click(function(){
+        $('.action_menu.chat').toggle();
+      });
+
+      $('#clickable-cell').click(function(){
+        $('.clickable-cell-content').toggle();
+      });
+
+      // HIDE POPUP OF CLICKING ANYWHERE ELSE
+      $(".card-body").click(function(){
+        $(".clickable-cell-content").fadeOut().removeClass("active");
+        $(".action_menu.chat").fadeOut().removeClass("active");
+      });
+
+      // Prevent events from getting pass
+      $(".clickable-cell-content").click(function(e){
+        e.stopPropagation();
+      });
+
+      $(".action_menu.chat").click(function(e){
+        e.stopPropagation();
+      });
+
+      setTimeout(function() {
+        $(".message_flash").fadeOut('slow');
+      }, 4000);
+
+    });
+
+  // TOGGLE ACTIVE MESSAGE ALERT OF APPLICANT
   var header = document.getElementById("panel-users");
   var btns = header.getElementsByClassName("toggle-btn");
   for (var i = 0; i < btns.length; i++) {
@@ -155,55 +263,76 @@
       if("{{ t.msg_session }}"=="{{ user.log_user_email }}") {
         if("{{ t.active }}"=="True"){
           document.getElementsByClassName('glyphicon-exclamation-sign')[{{user.id}}-1].style.color="darkred";
-        }
-        if("{{ t.active }}"=="false"){
+        } else if ("{{ t.active }}"=="false"){
           document.getElementsByClassName('glyphicon-exclamation-sign')[{{user.id}}-1].style.color="darkgray";
         }
       }
     {% endfor %}
   {% endfor %}
 
-  $(document).ready(function(){
-        socket.emit('join', {
-            channel : room
-        });
-
-    $(".form-control.search").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#panel-users tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-
-    // POPUP MENU EVENTS
-    $('#action_menu_btn').click(function(){
-      $('.action_menu.chat').toggle();
-    });
-
-    $('#clickable-cell').click(function(){
-      $('.clickable-cell-content').toggle();
-    });
-
-    // HIDE POPUP OF CLICKING ANYWHERE ELSE
-    $(".card-body").click(function(){
-      $(".clickable-cell-content").fadeOut().removeClass("active");
-      $(".action_menu.chat").fadeOut().removeClass("active");
-    });
-
-    // Prevent events from getting pass
-    $(".clickable-cell-content").click(function(e){
-      e.stopPropagation();
-    });
-
-    $(".action_menu.chat").click(function(e){
-      e.stopPropagation();
-    });
-
-    setTimeout(function() {
-      $(".message_flash").fadeOut('slow');
-    }, 4000);
-
+  var active = document.getElementsByClassName('offline-indicator');
+  var admin_active = document.getElementsByClassName('admin-offline-indicator');
+  var contact_active = document.getElementsByClassName('contact-offline-indicator');
+  socket.on("online_indicator", function(data) {
+    console.log("online_indicator is called.")
+    {% for user in logged_user %}
+      em = '{{ user.log_user_email }}';
+      if(em == data) {
+        console.log("user is online", '{{user.log_user_email}}');
+        active[{{user.id}}-1].style.color="green";
+        active[{{user.id}}-1].innerHTML="Online";
+      }
+    {% endfor %}
   });
+
+  socket.on("offline_indicator", function(data) {
+    console.log("offline_indicator is called.")
+    {% for user in logged_user %}
+      em = '{{ user.log_user_email }}';
+      if(em == data) {
+        console.log("user is offline", '{{user.log_user_email}}');
+        active[{{user.id}}-1].style.color="#990000";
+        active[{{user.id}}-1].innerHTML="Offline";
+      }
+    {% endfor %}
+  });
+
+  {% for user in logged_user %}
+    if("{{user.active}}"=="False") {
+      active[{{user.id}}-1].style.color="#990000";
+      active[{{user.id}}-1].innerHTML="Offline";
+    } else if("{{user.active}}"=="True") {
+      console.log("{{ user.log_user_name }} is online.")
+      active[{{user.id}}-1].style.color="green";
+      active[{{user.id}}-1].innerHTML="Online";
+    }
+  {% endfor %}
+
+  var admin_list = [];
+  {% for user in admin %}
+    admin_list.push("{{ user.username }}");
+    if("{{user.active}}"=="False") {
+      console.log("{{ user.username }} is online.")
+      admin_active[admin_list.indexOf("{{ user.username }}")].style.color="green";
+      admin_active[admin_list.indexOf("{{ user.username }}")].innerHTML="Online";
+    } else if("{{user.active}}"=="True") {
+      admin_active[admin_list.indexOf("{{ user.username }}")].style.color="#990000";
+      admin_active[admin_list.indexOf("{{ user.username }}")].innerHTML="Offline";
+    }
+  {% endfor %}
+
+  var contact_list = [];
+  {% for user in contacts %}
+    contact_list.push("{{ user.username }}");
+    if("{{user.active}}"=="False") {
+      console.log("{{user.username }} is online.")
+      contact_active[contact_list.indexOf("{{ user.username }}")].style.color="green";
+      contact_active[contact_list.indexOf("{{ user.username }}")].innerHTML="Online";
+    } else if("{{user.active}}"=="True") {
+      contact_active[contact_list.indexOf("{{ user.username }}")].style.color="#990000";
+      contact_active[contact_list.indexOf("{{ user.username }}")].innerHTML="Offline";
+    }
+  {% endfor %}
 
   function addPerson(name, email) {
     const msgHTML = `<div class="card-body contacts_body">
@@ -219,20 +348,21 @@
     msgerChat.scrollTop += 500;
   }
 
-    // Utils
-    function get(selector, root = document) {
-      return root.querySelector(selector);
-    }
+  // Utils
+  function get(selector, root = document) {
+    return root.querySelector(selector);
+  }
 
-    function formatDate(date) {
-      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-      const year = date.getFullYear();
-      const month = months[date.getMonth()];
-      const day = date.getDate();
-      const hr = "0" + date.getHours();
-      const min = "0" + date.getMinutes();
-      return `${month} ${day}, ${hr.slice(-2)}:${min.slice(-2)}`;
-    }
+  function formatDate(date) {
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const hr = "0" + date.getHours();
+    const min = "0" + date.getMinutes();
+    return `${month} ${day}, ${hr.slice(-2)}:${min.slice(-2)}`;
+  }
+
   function setCookie(cname,cvalue,exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));

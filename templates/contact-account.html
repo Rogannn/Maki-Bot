@@ -34,16 +34,17 @@
 </div>
 
 	<div class="card mb-sm-3 mb-md-0 contacts_card">
-            <div class="card-header">
-                <div class="input-group">
-                    <input type="text" placeholder="Search by Name or Email" name="" class="form-control search">
-                </div>
-            </div>
+      <div class="card-header">
+          <div class="input-group">
+              <input type="text" placeholder="Search by Name or Email" name="" class="form-control search">
+          </div>
+      </div>
 			<div class="card-body contacts_body">
-			    <h3 id="panel-title">Contacts</h3>
-			    <p class="reminder"><span class="glyphicon glyphicon-info-sign"></span>
-					Passwords are encrypted for security purposes. Make sure to remember your passwords.
-					</p>
+				<div class="alert">
+				  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+				  <strong>Reminder!</strong> Remember your passwords carefully as they are encrypted in database for security purposes.
+				</div>
+			    <h3 class="panel-title"><b>Contacts</b></h3>
 		           	<table id="panel">
 		              <thead>
 		                  <tr>
@@ -67,20 +68,12 @@
 		                      <td>{{ contact.password }}</td>
 		                      <td class="modify-tab">
 		                          <a href="{{ url_for('delete_contact', contact_id=contact.id) }}"
-		                              onclick="return confirm('Are you sure you want to delete {{ contact.fullname }}?');" title="Delete this contact">
+		                              onclick="return confirm('Are you sure you want to delete {{ contact.username }}?');" title="Delete this contact">
 		                              <i class="glyphicon glyphicon-trash"></i>
 		                          </a>
 		                      </td>
 		                  </tr>
 		                  <script type="text/javascript">
-		                      $(".update-info").on('click',  function() {
-		                          $('.contact-firstname').val('{{ contact.firstname }}');
-		                          $('.contact-middlename').val('{{ contact.middle }}');
-		                          $('.contact-lastname').val('{{ contact.lastname }}');
-		                          $('.contact-email').val('{{ contact.email }}');
-		                          $('.contact-username').val('{{ contact.username }}');
-		                          $('.contact-password').val('{{ contact.password }}');
-		                      });
 		                  </script>
 		                 	<tr>
 			                  {% endfor %}
@@ -125,6 +118,14 @@
 	    });
 
 	});
+	
+	function setCookie(cname,cvalue,exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
 	function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);

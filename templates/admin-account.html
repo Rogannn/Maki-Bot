@@ -40,11 +40,11 @@
             </div>
         </div>
 		<div class="card-body contacts_body">
-		<h3 id="panel-title">Administrators</h3>
-			<span class="reminder">
-				<span class="glyphicon glyphicon-info-sign"></span>
-				Passwords are encrypted for security purposes. Make sure to remember your passwords.
-			</span>
+			<div class="alert">
+				  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+				  <strong>Reminder!</strong> Remember your passwords carefully as they are encrypted in database for security purposes.
+				</div>
+		<h3 class="panel-title"><b>Administrators</b></h3>
 		    <table id="panel">
 		      <thead>
 		          <tr>
@@ -66,23 +66,17 @@
                   <td>{{ admin.email }}</td>
 		              <td>{{ admin.username }}</td>
 		              <td>{{ admin.password }}</td>
+		              {% if admin.username == session['username'] %}
+		              	<td><i class="glyphicon glyphicon-trash grey"></i></td>
+		              {% else %}
 		              <td class="modify-tab">
 		                  <a href="{{ url_for('delete_admin', admin_id=admin.id ) }}"
-		                      onclick="return confirm('Are you sure you want to delete {{ admin.username }}?');" title="Delete this account">
+		                      onclick="return confirm('Are you sure you want to delete {{ admin.username }}?');" title="Delete this account" id="icon-delete">
 		                      <i class="glyphicon glyphicon-trash"></i>
 		                  </a>
 		              </td>
+		              {% endif %}
 		          </tr>
-		          <script type="text/javascript">
-		              $(".update-info").on('click',  function() {
-                          $('.admin-firstname').val('{{ admin.firstname }}');
-                          $('.admin-middlename').val('{{ admin.middle }}');
-                          $('.admin-lastname').val('{{ admin.lastname }}');
-                          $('.admin-email').val('{{ admin.email }}');
-                          $('.admin-username').val('{{ admin.username }}');
-                          $('.admin-password').val('{{ admin.password }}');
-		              });
-		          </script>
 		          {% endfor %}
 		          <tr>
 			          {% with messages = get_flashed_messages() %}
@@ -123,10 +117,16 @@
 	        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 	      });
 	    });
-
 	});
 
-function getCookie(cname) {
+	function setCookie(cname,cvalue,exdays) {
+	  const d = new Date();
+	  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	  let expires = "expires=" + d.toGMTString();
+	  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+
+	function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
