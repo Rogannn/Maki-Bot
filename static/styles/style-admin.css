@@ -6,6 +6,28 @@ body,html{
 	    background: linear-gradient(to right, #5c0017, #ff4d79, #5c0017);
 	    --login-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 		}
+
+		.alert {
+		  padding: 20px;
+		  background-color: #f44336;
+		  color: white;
+		}
+
+		.closebtn {
+		  margin-left: 15px;
+		  color: white;
+		  font-weight: bold;
+		  float: right;
+		  font-size: 22px;
+		  line-height: 20px;
+		  cursor: pointer;
+		  transition: 0.3s;
+		}
+
+		.closebtn:hover {
+		  color: black;
+		}
+
 		.glyphicon.glyphicon-trash.grey {
 			color: grey;
 		}
@@ -56,6 +78,7 @@ body,html{
 		}
 
 		.reminder {
+			position: absolute;
 			margin: 5px;
 			color: red;
 			text-align: left;
@@ -84,6 +107,7 @@ body,html{
 			transition: all 500ms;
 		}
 		a *:hover {
+			cursor: pointer;
 			text-decoration: none;
 			font-size:1.3em;
     		font-size-adjust: 20px;
@@ -279,12 +303,15 @@ body,html{
 			margin-left: 3em;
 		}
 
-		#panel-title {
+		.panel-title {
 			color: white;
 			padding: 5px;
 			text-align: center;
 			cursor: context-menu;
 			background-color: rgb(245, 245, 0, 0.2);
+		}
+		.panel-title b{
+			font-size: 1.5em;
 		}
 		#panel {
 			table-layout: fixed;
@@ -720,6 +747,7 @@ body,html{
 		.contacts_card{
 			margin-bottom: 15px !important;
 		}
+
 		/* LOADER ANIMATION */
 		.modal {
 		    display:    none;
@@ -817,4 +845,5 @@ body,html{
 		  100% {
 		    height: 0%;
 		  }
+
 	}
