@@ -7,6 +7,40 @@ body,html{
 	    --login-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 		}
 
+		#add-btn {
+			font-size: 1.5em;
+			float: right;
+			margin: 10px;
+			color: #5c0017;
+		}
+		#add-btn:hover {
+			color: #c3cfe2;
+			cursor: pointer;
+		}
+		#cancel-btn {
+			font-size: 1.6em;
+			color: red;
+			margin: 5px;
+			float: right;
+			display: none;
+		}
+		#confirm-btn {
+			font-size: 1.6em;
+			color: green;
+			margin: 5px;
+			float: right;
+			display: none;
+		}
+		#cancel-btn:hover, #confirm-btn:hover {
+			color: #c3cfe2;
+			cursor: pointer;
+		}
+		.msg-selection {
+			float: right;
+			transform: scale(1.5);
+			display: none;
+		}
+
 		.alert {
 		  padding: 20px;
 		  background-color: #f44336;
