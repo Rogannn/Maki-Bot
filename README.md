@@ -14,8 +14,9 @@ They only appear for certain reasons that can be easily avoided and not have bad
 - FIX: re-sync date and time
 
 
-2. When applicant chats with Maki Bot, it will trigger the notify mailing system even if the query of applicant is within the FAQs. This only happens when its the first time running the system after booting up the device.
+2. A function gets triggered for whatever reason.
 
 - REASON: idk
 
-- FIX: Run, stop, and run again the launcher when its the first time running after booting up the computer. Do this only once per boot up.
+- FIX: When its your first time running the system after turning on your computer, execute the launcher.py two times. Run, stop, and then run again
+
