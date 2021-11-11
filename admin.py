@@ -1,3 +1,4 @@
+import json
 from functools import wraps
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -247,6 +248,32 @@ def logout():
     return redirect(url_for("login_page"))
 
 
+@app.route('/get_training_data', methods=["GET", "POST"])
+def get_training_data():
+    msg_id = request.args.get('msg_id')
+    print(msg_id)
+    all_msg = ChatLog.query.all()
+
+    for msg in all_msg:
+        if msg.id == msg_id:
+            print(f"waw {msg.id}")
+
+    '''new_msg = {"tag": f"{msg_list}",
+               "triggers": [f"{question}"],
+               "responses": [f"{answer}"]
+               }
+    learn_this(new_msg)'''
+    return msg_id
+
+
+def learn_this(new_data, filename='dialogs.json'):
+    with open(filename, 'r+') as file:
+        file_data = json.load(file)
+        file_data["dialogs"].append(new_data)
+        file.seek(0)
+        json.dump(file_data, file, indent=4)
+
+
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])
 @login_required
 def delete_contact(contact_id):
@@ -266,19 +293,6 @@ def delete_admin(admin_id):
     return redirect(url_for('admin_account'))
 
 
-@app.route("/delete_all_chats")
-@login_required
-def delete_all_chat():
-    ''' CLEAR THE CHAT LOGS '''
-    try:
-        delete_chat = db.session.query(ChatLog).delete()
-        db.session.commit()
-        return redirect("home-admin")
-    except KeyError:
-        db.session.rollback()
-    return render_template("home-admin.html")
-
-
 @app.route("/admin_msg", methods=["GET", "POST"])
 def get_admin_message():
     user_email = request.args.get('email')
@@ -292,17 +306,6 @@ def get_admin_message():
                          msg_session=user_email, user_role=admin_role)
     db.session.add(admin_chat)
     db.session.commit()
-
-    applicant_db = LoggedInUsers.query.all()
-    for a in applicant_db:
-        if not a.active and a.log_user_email == user_email:
-            admin_msg = Message('Hello! This is Maki Bot from DHVSU Admissions Office',
-                                sender=app.config.get("MAIL_USERNAME"),
-                                recipients=[user_email]
-                                )
-            admin_msg.body = f"The answer to your question by the Admissions Office is: \n'{admin_message}'" \
-                             "\n\nYou can check the website here at http://127.0.0.1:5000/home."
-            mail.send(admin_msg)
 
     return admin_message
 

@@ -469,7 +469,6 @@ def on_join(data):
 
 @socket_.on('disconnect')
 def disconnect_user():
-    print(f"{session['username']}: has disconnected.")
     '''admin_user = AdminLogin.query.filter_by(username=session['username']).first()
     admin_db = AdminLogin.query.all()
     for a in admin_db:

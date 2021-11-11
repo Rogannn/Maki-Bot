@@ -1,0 +1,322 @@
+{
+    "dialogs": [
+        {
+            "tag": "tag1",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "tag2",
+            "triggers": [
+                "trigger 1",
+                "trigger 2"
+            ],
+            "responses": [
+                "response 1",
+                "response 2"
+            ]
+        },
+        {
+            "tag": "new_tag",
+            "triggers": [
+                "new trigger1",
+                "new trigger2"
+            ],
+            "responses": [
+                "new responses1",
+                "new responses2"
+            ]
+        },
+        {
+            "tag": "new_tag",
+            "triggers": [
+                "eeeeeeeeeeee"
+            ],
+            "responses": [
+                "new responses1",
+                "new responses2"
+            ]
+        }
+    ]
+}

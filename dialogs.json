@@ -71,6 +71,10 @@
           "responses": ["Hello!", "Hi!", "Hello! How can i help you?"],
           "context_set": ""
         },
+        {"tag": "greeting2",
+          "triggers": ["how are you"],
+          "responses": ["I think i'm doing great!"]
+        },
         {"tag": "goodbye",
           "triggers": ["goodbye", "bye"],
           "responses": ["Have a nice day!", "Bye! Come back again soon!"]
@@ -81,15 +85,19 @@
         },
         {"tag": "ok",
           "triggers": ["ok", "k", "okay", "oke", "oki"],
-          "responses": ["Okay!"]
+          "responses": ["Okay!", "Good!"]
         },
         {"tag": "amazed",
-          "triggers": ["wow", "waw", "amazing", "incredible", "good", "very good", "outstanding"],
+          "triggers": ["nice","wow", "waw", "amazing", "incredible", "good", "very good", "outstanding"],
           "responses": ["Thanks!", "Hehe.", "Thank you!"]
         },
         {"tag": "agreed",
           "triggers": ["yes", "yeah", "ye", "yep", "yup", "agree"],
           "responses": ["Thanks!", "Thank you!"]
+        },
+        {"tag": "recognizing",
+          "triggers": ["who are you", "what is your name"],
+          "responses": ["My name is Maki! Created to answer admission related inquiries, just don't ask me anything unrelated to admission, okay?", "I am Maki, created to answer only admission related inquiries. If your question is not in my range, I can notify the Admission for you!"]
         },
         {"tag": "gratitude",
           "triggers": ["your welcome", "welcome", "wc", "np", "no problem"],
