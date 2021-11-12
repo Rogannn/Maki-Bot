@@ -1,5 +1,5 @@
 # Maki-Bot
-Web-based A.I. Chatbot using NLP with Tensorflow for DHVSU Admission Inquiries
+Web-based Inquiry Chatbot using NLP with Tensorflow for DHVSU Admission Inquiries
 
 
 Run launcher.py to use
