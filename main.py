@@ -274,8 +274,11 @@ def login():
 
 @server.route("/callback")
 def callback():
-    flow.fetch_token(authorization_response=request.url)
-
+    try:
+        flow.fetch_token(authorization_response=request.url)
+    except ConnectionError:
+        return "Error logging in. Your connection might be too slow. Please try reloading the page."
+    # raise ConnectionError(err, request=request)
     try:
         if not session["state"] == request.args["state"]:
             abort(500)  # when state does not match
@@ -415,11 +418,8 @@ def handle_send_message_event(data):
 @socket_.on('message_received')
 def handle_message_alert_event(data):
     if acc < 0.8:
-        try:
-            chat_user = ChatLog.query.filter_by(msg_session=session['email']).first()
-            chat_datastore.toggle_active(chat_user)
-        except KeyError:
-            return "Currently sending email from the Admin."
+        chat_user = ChatLog.query.filter_by(msg_session=session['email']).first()
+        chat_datastore.toggle_active(chat_user)
         print("Probability is below 80%.")
         print("Message alert received in main.")
         socket_.emit('message_alert', data, broadcast=True)
@@ -476,7 +476,10 @@ def disconnect_user():
             admin_datastore.toggle_active(admin_user)
             db.session.commit()'''
 
-    session.pop("logged_in")
+    try:
+        session.pop("logged_in")
+    except KeyError:
+        print("There is no Admin currently online.")
     session.pop("user_role")
     session.pop("username")
 

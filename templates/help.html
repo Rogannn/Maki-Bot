@@ -12,7 +12,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-
+<center>
+  <div class="banner">
+    <img src="../static/styles/images/dhvsu.png" style="width: 10%;">
+    <img src="../static/styles/images/dhvsu_banner.jpg">
+  </div>
+</center>
 <div id="navbar">
     <img src="{{ session['picture'] }}" alt="Profile Picture">
     <p>{{ session["name"] }}</p>
@@ -54,10 +59,17 @@
     </div>
 </div>
 <div class="footer">
-    <p>Maki Bot 2021</p>
-    <span>
-      <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
-    </span>
+    <div id="upper-footer">
+      <p>Maki Bot 2021</p>
+      <span>
+        <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
+      </span>
+    </div>
+    <div id="lower-footer">
+      <span>© Don Honorio Ventura State University, 2014. All rights reserved.</span><br>
+      <span>Villa de Bacolor, Pampanga, Philippines, 2001</span><br>
+      <a href="https://dhvsu.edu.ph/index.php/dhvtsu-web-development">DHVSU-MIS Web Development Team</a>
+    </div>
 </div>
 
 <script type="text/javascript">

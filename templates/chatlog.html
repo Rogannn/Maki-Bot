@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8">
+<meta charset='utf-8'>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style-admin.css') }}">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,6 +16,8 @@
 </head>
 <body onload="checkCookie()">
     <div class="card-header msg_head">
+        <span class="glyphicon glyphicon-plus" onclick="toggleCheckBox()" id="add-btn" title="Add messages as learning data"></span>
+        <span class="glyphicon glyphicon-ok" id="confirm-btn" title="Confirm"></span><span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
         <div class="d-flex bd-highlight">
             <div class="img_cont">
             </div>
@@ -38,7 +39,7 @@
                         <span class="msg_time">{{ msg.timestamp }}</span>
                     </div>
                     <div class="msg_container right">
-                        <b> {{ msg.msg_from }} </b>
+                        <b> {{ msg.msg_from }} </b><input type="checkbox" value="{{ msg.id }}" name="selected" class="msg-selection" title="Add as the answer to the query">
                         <br> {{ msg.message }}
                     </div>
                 {% else %}
@@ -46,8 +47,8 @@
                         <span class="msg_time">{{ msg.timestamp }}</span>
                     </div>
                     <div class="msg_container left">
-                        <b> {{ msg.msg_from }} </b>
-                        <br> {{ msg.message }}
+                        <b> {{ msg.msg_from }} </b><input type="checkbox" value="{{ msg.id }}" name="selected" class="msg-selection" title="Add as the query" >
+                        <br>{{ msg.message }}
                     </div>
                 {% endif %}
             {% endfor %}
@@ -91,10 +92,62 @@
     var ADMIN_NAME = "ADMISSION ADMIN";
     var ADMIN_IMG = "../static/styles/images/user-icon.png";
 
+    $(document).ready(function () {
+        // JOIN ROOM
+        socket.emit('join', {
+            channel : room
+        });
+        // CHATLOG SCROLL
+        $(".card-body.msg_card_body").scrollTop($('.card-body.msg_card_body').get(0).scrollHeight);
+
+        $('#confirm-btn').click(function() {
+            $("input[type=checkbox][name=selected]:checked").each(function() {
+                getData(this.value);
+            });
+        });
+
+    });
+
+    function getData(id) {
+        $.get("/admin/get_training_data", { msg_id: id }).done(function (data) {
+            console.log(data);
+        });
+    }
+
     // CONNECT
     socket.on('connect', socket => {
         console.log("Admin has connected.");
     });
+    var checkedValue = null; 
+    var addBtn = document.getElementById("add-btn");
+    var cancelBtn = document.getElementById("cancel-btn");
+    var confirmBtn = document.getElementById("confirm-btn");
+    var checkBtn = document.getElementsByClassName("msg-selection");
+    function toggleCheckBox() {
+        msg_list = [];
+        {% for msg in messages %}
+            msg_list.push("{{ msg.id }}");
+            if(addBtn.style.display == "none" && checkBtn[msg_list.indexOf("{{ msg.id }}")].style.display == "inline-block") {
+                /* HIDE CHECKBOX, CANCEL AND CONFIRM BUTTON */
+                checkBtn[msg_list.indexOf("{{ msg.id }}")].checked = false;
+                cancelBtn.style.display = "none";
+                confirmBtn.style.display = "none";
+                addBtn.style.display = "block";
+                checkBtn[msg_list.indexOf("{{ msg.id }}")].style.display = "none";
+                for(let i = 1; i < msg_list.length; i++) {
+                    checkBtn[i].style.display = "none";
+                    checkBtn[i].checked.value;
+                    checkBtn[i].checked = false;
+                }
+            } else {
+                /* SHOW CHECKBOX, CANCEL AND CONFIRM BUTTON */
+                cancelBtn.style.display = "inline-block";
+                confirmBtn.style.display = "inline-block";
+                addBtn.style.display = "none";
+                checkBtn[msg_list.indexOf("{{ msg.id }}")].style.display = "inline-block";
+            }
+        {% endfor %}
+    }
 
     $('#submit_message').on('click', function() {
       event.preventDefault();
@@ -131,28 +184,6 @@
             role: data.role,
             state: data.state
         });
-    });
-
-    $(document).ready(function () {
-        // JOIN ROOM
-        socket.emit('join', {
-            channel : room
-        });
-        // CHATLOG SCROLL
-        $(".card-body.msg_card_body").scrollTop($('.card-body.msg_card_body').get(0).scrollHeight);
-
-    });
-
-    $body = $("body");
-
-    $(document).on({
-        ajaxStart: function() { $body.addClass("loading");    },
-         ajaxStop: function() { $body.removeClass("loading"); }    
-    });
-
-    // LOADER
-    $(window).on('load', function() {
-        $('.loader-wrapper').fadeOut("slow");
     });
 
     // GET THE MESSAGE TO PUT IN THE DATABASE

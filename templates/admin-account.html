@@ -19,21 +19,28 @@
 </head>
 <body onload="checkCookie()">
 
+<center>
+  <div class="banner">
+    <img src="../static/styles/images/dhvsu.png" style="width: 10%;">
+    <img src="../static/styles/images/dhvsu_banner.jpg">
+  </div>
+</center>
 <div class="navbar">
   <div class="admission-logo"></div>
-  <p id="logged-in-as">Logged in as {{ session['user_role'] }}: {{ session['username'] }}</p>
-  <a href="home-admin">Conversations</a>
-  <div class="dropdown">
-      <p class="drop">Accounts<span class="glyphicon glyphicon-menu-down"></span></p>
-      <div class="dropdown-content">
-          <a href="contact-account">Contacts</a>
-          <a href="admin-account">Administrators</a>
-      </div>
-  </div>
-  <a href="/admin/admin-logout">Logout<i class="fa-solid fa-right-from-bracket"></i></a>
+  <span id="logged-in-as">Logged in as {{ session['user_role'] }}: {{ session['username'] }}</span>
+  <a href="home-admin">CONVERSATIONS</a>
+    <div class="dropdown">
+        <p id="drop">ACCOUNTS</p>
+        <div class="dropdown-content">
+            <a href="contact-account">Contacts</a>
+            <a href="admin-account">Administrators</a>
+        </div>
+    </div>
+  <a href="/admin/admin-logout">LOGOUT<i class="fa-solid fa-right-from-bracket"></i></a>
 </div>
 
 	<div class="card mb-sm-3 mb-md-0 contacts_card">
+	{% if session["user_role"] == "Admin" %}
         <div class="card-header">
             <div class="input-group">
                 <input type="text" placeholder="Search by Name or Email" name="" class="form-control search">
@@ -44,7 +51,7 @@
 				  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
 				  <strong>Reminder!</strong> Remember your passwords carefully as they are encrypted in database for security purposes.
 				</div>
-		<h3 class="panel-title"><b>Administrators</b></h3>
+		<h3 class="panel-title"><b>ADMINISTRATORS</b></h3>
 		    <table id="panel">
 		      <thead>
 		          <tr>
@@ -54,7 +61,7 @@
                   <th>Email</th>
 		              <th>Username</th>
 		              <th>Password</th>
-		              <th class="modify-tab">Options</th>
+		              <th class="modify-tab">Option</th>
 		          </tr>
 		      </thead>
 		        <tbody id="admin-table">
@@ -100,10 +107,44 @@
 		    </table>
 			
 		</div>
+		{% else %}
+			<center><strong>Forbidden</strong></center>
+		{% endif %}
 	</div>
+
+<div class="footer">
+    <div id="upper-footer">
+      <p>Maki Bot 2021</p>
+      <span>
+        <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
+      </span>
+    </div>
+    <div id="lower-footer">
+      <span>© Don Honorio Ventura State University, 2014. All rights reserved.</span><br>
+      <span>Villa de Bacolor, Pampanga, Philippines, 2001</span><br>
+      <a href="https://dhvsu.edu.ph/index.php/dhvtsu-web-development">DHVSU-MIS Web Development Team</a>
+    </div>
+</div>
 
 </body>
 <script type="text/javascript">
+
+  document.getElementById('drop').addEventListener('mouseover', function() {
+    document.getElementById('drop').style.backgroundColor = '#5c0017';
+    document.getElementById('drop').style.color = 'white';
+  });
+  document.getElementById('drop').addEventListener('mouseout', function() {
+    document.getElementById('drop').style.backgroundColor = 'white';
+    document.getElementById('drop').style.color = '#5c0017';
+  });
+  document.getElementsByClassName('dropdown-content')[0].addEventListener('mouseover', function() {
+    document.getElementById('drop').style.backgroundColor = '#5c0017';
+    document.getElementById('drop').style.color = 'white';
+  });
+  document.getElementsByClassName('dropdown-content')[0].addEventListener('mouseout', function() {
+    document.getElementById('drop').style.backgroundColor = 'white';
+    document.getElementById('drop').style.color = '#5c0017';
+  });
 
 	$(document).ready(function(){
 			$(".message_flash").fadeOut(3000);

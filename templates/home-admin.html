@@ -19,25 +19,30 @@
 </head>
 <body onload="checkCookie()">
 
-        
+<center>
+  <div class="banner">
+    <img src="../static/styles/images/dhvsu.png" style="width: 10%;">
+    <img src="../static/styles/images/dhvsu_banner.jpg">
+  </div>
+</center>
 <div class="navbar">
   <div class="admission-logo"></div>
-  <p id="logged-in-as">Logged in as {{ session['user_role'] }}: {{ session['username'] }}</p>
-  <a href="home-admin">Conversations</a>
+  <span id="logged-in-as">Logged in as {{ session['user_role'] }}: {{ session['username'] }}</span>
+  <a href="home-admin">CONVERSATIONS</a>
   {% if session['user_role'] == "Contact" %}
     <div>
       <p>Forbidden</p>
     </div>
   {% else %}
     <div class="dropdown">
-        <p class="drop">Accounts<span class="glyphicon glyphicon-menu-down"></span></p>
+        <p id="drop">ACCOUNTS</p>
         <div class="dropdown-content">
             <a href="contact-account">Contacts</a>
             <a href="admin-account">Administrators</a>
         </div>
     </div>
   {% endif %}
-  <a href="/admin/admin-logout">Logout<i class="fa-solid fa-right-from-bracket"></i></a>
+  <a href="/admin/admin-logout">LOGOUT<i class="fa-solid fa-right-from-bracket"></i></a>
 </div>
 
 <div class="container-fluid h-100">
@@ -50,14 +55,14 @@
                     </div>
                 </div>
                 <div class="card-body contacts_body">
-                    <p class="panel-title"><b>Applicants</b> ({{ applicant_count }})</p>
+                    <p class="panel-title"><b>APPLICANTS</b> ({{ applicant_count }})</p>
                         <table id="panel-users">
                         <thead>
                         </thead>
                         {% for user in logged_user %}
                             <tbody>
                                 <tr>
-                                    <td class="toggle-btn" id="users" onclick="$('.card.chat').load('{{ url_for('show_message', email=user.log_user_email) }}'); location.href='#applicant={{ user.log_user_email }}'">
+                                    <td class="toggle-btn" onclick="$('.card.chat').load('{{ url_for('show_message', email=user.log_user_email) }}'); location.href='#applicant={{ user.log_user_email }}'">
                                       <span class="offline-indicator">Offline</span>
                                       <span class="glyphicon glyphicon-exclamation-sign"></span>
                                       {{ user.log_user_name }} <p class="email"> {{ user.log_user_email }} </p>
@@ -105,7 +110,7 @@
                     </div>
                 </div>
                 <div class="card-body contacts_body">
-                    <h3 class="panel-title"><b>Contacts</b> ({{ contact_count }})</h3>
+                    <h3 class="panel-title"><b>CONTACTS</b> ({{ contact_count }})</h3>
                         <table id="panel-contact">
                         <thead>
                           <tr>
@@ -135,7 +140,7 @@
                     </div>
                 </div>
                 <div class="card-body contacts_body">
-                    <h3 class="panel-title"><b>Administrators</b> ({{ admin_count }})</h3>
+                    <h3 class="panel-title"><b>ADMINISTRATORS</b> ({{ admin_count }})</h3>
                         <table id="panel-admin">
                         <thead>
                           <tr>
@@ -161,6 +166,21 @@
         </div>
     </div>
 </div>
+
+<div class="footer">
+    <div id="upper-footer">
+      <p>Maki Bot 2021</p>
+      <span>
+        <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
+      </span>
+    </div>
+    <div id="lower-footer">
+      <span>© Don Honorio Ventura State University, 2014. All rights reserved.</span><br>
+      <span>Villa de Bacolor, Pampanga, Philippines, 2001</span><br>
+      <a href="https://dhvsu.edu.ph/index.php/dhvtsu-web-development">DHVSU-MIS Web Development Team</a>
+    </div>
+</div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
 
@@ -195,30 +215,6 @@
         $("#panel-contact tr").filter(function() {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
-      });
-
-      // POPUP MENU EVENTS
-      $('#action_menu_btn').click(function(){
-        $('.action_menu.chat').toggle();
-      });
-
-      $('#clickable-cell').click(function(){
-        $('.clickable-cell-content').toggle();
-      });
-
-      // HIDE POPUP OF CLICKING ANYWHERE ELSE
-      $(".card-body").click(function(){
-        $(".clickable-cell-content").fadeOut().removeClass("active");
-        $(".action_menu.chat").fadeOut().removeClass("active");
-      });
-
-      // Prevent events from getting pass
-      $(".clickable-cell-content").click(function(e){
-        e.stopPropagation();
-      });
-
-      $(".action_menu.chat").click(function(e){
-        e.stopPropagation();
       });
 
       setTimeout(function() {
@@ -349,6 +345,23 @@
   }
 
   // Utils
+  document.getElementById('drop').addEventListener('mouseover', function() {
+    document.getElementById('drop').style.backgroundColor = '#5c0017';
+    document.getElementById('drop').style.color = 'white';
+  });
+  document.getElementById('drop').addEventListener('mouseout', function() {
+    document.getElementById('drop').style.backgroundColor = 'white';
+    document.getElementById('drop').style.color = '#5c0017';
+  });
+  document.getElementsByClassName('dropdown-content')[0].addEventListener('mouseover', function() {
+    document.getElementById('drop').style.backgroundColor = '#5c0017';
+    document.getElementById('drop').style.color = 'white';
+  });
+  document.getElementsByClassName('dropdown-content')[0].addEventListener('mouseout', function() {
+    document.getElementById('drop').style.backgroundColor = 'white';
+    document.getElementById('drop').style.color = '#5c0017';
+  });
+
   function get(selector, root = document) {
     return root.querySelector(selector);
   }
