@@ -10,7 +10,7 @@ To login in admin side, use this account:
 
 
 # Current problems occuring when running Maki Bot:
-They only appear for certain reasons that can be easily avoided and not have bad effect.
+They only appear for certain reasons that can be easily avoided (this might just be happening specifically because of my 8 year old laptop).
 1. When applicant logins using google account, it will trigger a early token warning. This problem might only happen specifically on my laptop.
 
 - REASON: When I used ccleaner to clean cache of my laptop, the time gets out of sync a little bit
