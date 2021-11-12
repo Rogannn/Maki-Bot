@@ -5,8 +5,8 @@ body,html {
 		}
 
 		.footer {
-	      overflow: hidden;
 	      margin-top: 60px;
+		  bottom: 0;
 	    }
 	    #upper-footer {
 	      padding: 100px;
@@ -92,11 +92,11 @@ body,html {
 			font-size: 1.5em;
 			float: right;
 			margin: 10px;
-			color: #5c0017;
+			color: white;
 		}
 		#add-btn:hover {
-			color: #c3cfe2;
 			cursor: pointer;
+			color: #c3cfe2;
 		}
 		#cancel-btn {
 			font-size: 1.6em;
@@ -585,6 +585,7 @@ body,html {
 		.msg_time {
 			color: rgba(255,255,255,0.5);
 			font-size: .85em;
+			color: #5c0017;
 		}
 		.msg_head {
 			position: relative;
