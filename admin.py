@@ -1,13 +1,12 @@
 import json
 from functools import wraps
 
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from flask_socketio import SocketIO, join_room, emit, leave_room
 from sqlalchemy.exc import IntegrityError
 import datetime
 from flask_security import Security
 from flask_security.utils import hash_password, verify_password
-from flask_mail import Mail, Message
 from main import db, ChatLog, LoggedInUsers, Contacts, AdminLogin, contact_datastore, admin_datastore, chat_datastore
 
 app = Flask(__name__)
@@ -26,21 +25,11 @@ app.config['SQLALCHEMY_BINDS'] = {
     'to_notify': 'sqlite:///db/contacts.sqlite3',
     'logged_in': 'sqlite:///db/logged_users.sqlite3'
 }
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": 'makibotmail@gmail.com',
-    "MAIL_PASSWORD": 'P@$$W012DF012M@K1130T'
-}
 
 db.init_app(app)
 db.create_all(bind=['all_chats', 'to_login', 'to_notify', 'logged_in'])
 
 sec = Security()
-app.config.update(mail_settings)
-mail = Mail(app)
 
 contact_security = Security(app, name=contact_datastore, login_form=app.route("/"))
 admin_security = Security(app, name=admin_datastore, login_form=app.route("/"))
@@ -250,20 +239,16 @@ def logout():
 
 @app.route('/get_training_data', methods=["GET", "POST"])
 def get_training_data():
-    msg_id = request.args.get('msg_id')
-    print(msg_id)
-    all_msg = ChatLog.query.all()
-
-    for msg in all_msg:
-        if msg.id == msg_id:
-            print(f"waw {msg.id}")
-
-    '''new_msg = {"tag": f"{msg_list}",
-               "triggers": [f"{question}"],
-               "responses": [f"{answer}"]
+    msg = request.args.getlist('msg[]')
+    print(f"query: {msg[0]} - response: {msg[1]}")
+    example_tag = "new_tag"
+    new_msg = {"tag": f"{example_tag}",
+               "triggers": [f"{msg[0]}"],
+               "responses": [f"{msg[1]}"]
                }
-    learn_this(new_msg)'''
-    return msg_id
+    learn_this(new_msg)
+
+    return 'ADMIN[GTD]: Done getting the training data.'
 
 
 def learn_this(new_data, filename='dialogs.json'):
@@ -272,6 +257,7 @@ def learn_this(new_data, filename='dialogs.json'):
         file_data["dialogs"].append(new_data)
         file.seek(0)
         json.dump(file_data, file, indent=4)
+    return 'ADMIN[LT]: Done adding to dialogs.'
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])
