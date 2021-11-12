@@ -1,10 +1,91 @@
-body,html{
+body,html {
 		height: 100%;
 		margin: 0;
-		background: #7F7FD5;
-	    background: -webkit-linear-gradient(to right, #5c0017, #ff4d79, #5c0017);
-	    background: linear-gradient(to right, #5c0017, #ff4d79, #5c0017);
 	    --login-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		}
+
+		.footer {
+	      overflow: hidden;
+	      margin-top: 60px;
+	    }
+	    #upper-footer {
+	      padding: 100px;
+	      color: white;
+	      background-color: #5c0017;
+	    }
+	    #lower-footer {
+	      padding: 10px;
+	      font-size: 0.8em;
+	      text-align: center;
+	      background-color: #feba29;
+	    }
+
+		.banner {
+			width: 100%;
+			background-color: #5c0017;
+			overflow: auto;
+			border-bottom: #feba29 4px solid;
+		}
+
+		#wrapper_top {
+			background-color: #feba29;
+			width: 100%;
+			height: 42px;
+		}
+
+		#wrapper_top img{
+			width: 2.5%;
+			margin: 4px;
+			margin-left: 11.3%;
+			float: left;
+		}
+
+		#wrapper_top p {
+			text-align: left;
+			font-size: 13px;
+			color: #d7391f;
+			padding: 11px;
+			padding-left: 2%;
+		}
+
+		#wrapper_menu {
+			text-align: left;
+			padding: 9px;
+			margin-top: 1px;
+			background-color: #5c0017;
+			display: block;
+		}
+
+		#wrapper_menu a {
+			color: white;
+			background-color: #b3002d;
+			padding: 10px 22px 10px 22px;
+			text-decoration: none;
+		}
+
+		#wrapper_menu a:hover {
+			background-color: #800020;
+		}
+
+		#wrapper_menu .active {
+			background-color: #800020;
+			border-bottom: none;
+		}
+
+		#wrapper_menu .logout {
+			font-size: 15px;
+			background-color: red;
+			margin-left: 61.5%;
+			border-radius: 10%; 
+			padding: 3px 16px 3px 16px;
+		}
+
+		#wrapper_menu .logout:hover {
+			background-color: #b30000;
+		}
+
+		#wrapper_menu .nonclickable {
+			background-color: #5c0017;
 		}
 
 		#add-btn {
@@ -65,6 +146,9 @@ body,html{
 		.glyphicon.glyphicon-trash.grey {
 			color: grey;
 		}
+		.glyphicon.glyphicon-trash {
+			color: #5c0017;
+		}
 
 		.offline-indicator {
 			float: right;
@@ -90,9 +174,9 @@ body,html{
 		}
 
 		.admission-logo {
-			width: 50px;
-			min-width: 50px;
-			height: 50px;
+			width: 40px;
+			min-width: 40px;
+			height: 40px;
 			margin: 0;
 			background: rgb(92, 0, 23, 0.3);
 			background-repeat: no-repeat;
@@ -148,25 +232,29 @@ body,html{
 		}
 
 		.navbar {
-		  	background-color: #5c0017;
-		  	border-bottom: 2px solid #f5b400 !important;
+		  	background-color: white;
+		  	font-weight: bold;
+		  	border-bottom: 2px solid #5c0017 !important;
+			margin: 0;
 		}
 		.navbar #logged-in-as {
 			width: 1%;
 			min-width: 150px;
-			color: #cccccc;
-			margin: 0;
+			color: #5c0017;
 		}
 		.navbar a, .con {
-			font-size: 1.2em;
-			transition: all 500ms;
+			padding: 10px;
+			font-size: 1em;
 		  	display: block;
-		  	color: #f2f2f2;
+		  	color: #5c0017;
 		  	text-align: center;
 		  	text-decoration: none;
 		}
-		.navbar a, .con:hover {
+		.navbar a:hover, .con:hover {
+			background-color: #5c0017;
+			color: white;
 			cursor: pointer;
+		  	text-decoration: none;
 		}
 		.navbar img {
 		  	width: 35px;
@@ -175,8 +263,18 @@ body,html{
 		  	float: right;
 		  	display: block;
 		}
-
-
+		#drop {
+			padding: 10px;
+			color: #5c0017;
+			margin: 0;
+			text-align: left;
+			text-decoration: none;
+			display: block;
+		}
+		#drop:hover {
+			background-color: #5c0017;
+			color: white;
+		}
 		.dropdown {
 			position: relative;
 			display: inline-block;
@@ -186,26 +284,32 @@ body,html{
 		.dropdown-content {
 			display: none;
 			position: absolute;
+			margin-top: 1px;
 			background-color: #5c0017;
+			border: 1px solid #feba29;
 			min-width: 160px;
 			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 			z-index: 1;
 		}
 
-		.dropdown-content a, .drop {
+		.dropdown-content a {
 			margin: 0 auto;
 			text-align: left;
 			color: white;
-			padding: 12px 16px;
+			padding: 4px 16px;
+			margin: 3px;
+			font-size: 1.3em;
+			font-weight: normal;
 			text-decoration: none;
 			display: block;
 		}
+		.dropdown-content a:hover {
+			color: #5c0017;
+			background-color: rgb(255, 255, 255, 0.5);
+		}
 
-		.dropdown:hover .dropdown-content {display: block;}
-
-		.dropbtn:hover  {
-			color: white;
-			cursor: pointer;
+		.dropdown:hover .dropdown-content {
+			display: block
 		}
 
 		.login-page {
@@ -291,21 +395,6 @@ body,html{
 			color: red;
 			margin: 0 auto;
 		}
-		.account-input {
-			color: white;
-			border-radius: 0;
-			background-color: rgba(0,0,0,0.3);
-			border: 0;
-			width: 100px;
-			margin: 5px;
-			padding: 10px;
-		}
-		.account-input:focus {
-			background-color: rgb(245, 245, 0, 0.4);
-		}
-		.account-input:hover {
-			background-color: rgb(245, 245, 0, 0.4);
-		}
 
 		#submit-btn {
 			border: 0;
@@ -324,27 +413,13 @@ body,html{
 			border: 1px solid black;
 		}
 
-		/* POPUP MENU */
-		#clickable-cell {
-			margin-left: 18em;
-			color: white;
-		}
-		#clickable-cell:hover {
-			color: rgb(245, 245, 0, 0.4);
-			cursor: pointer;
-		}
-		.action_menu.clickable-cell-content {
-			margin-left: 3em;
-		}
-
 		.panel-title {
-			color: white;
 			padding: 5px;
 			text-align: center;
 			cursor: context-menu;
-			background-color: rgb(245, 245, 0, 0.2);
 		}
 		.panel-title b{
+			color: #5c0017;
 			font-size: 1.5em;
 		}
 		#panel {
@@ -353,33 +428,45 @@ body,html{
 		  	border-collapse: collapse;
 		}
 		#panel a {
-			color: white;
+			color: #5c0017;
 		}
 		#panel td {
 		  	padding: 15px 0 15px 0;
-			color: white;
+			color: #5c0017;
 			overflow-x: auto;
 			text-align: center;
 			border-top: 1px solid rgb(92, 0, 23, 0.5);
 			border-bottom: 1px solid rgb(92, 0, 23, 0.5);
 		}
-		#panel td:hover {
-			background-color: rgb(245, 245, 0, 0.2);
+		tr:nth-child(even) {
+		  background-color: #dddddd;
 		}
 		#panel tr:hover {
-			background-color: rgb(245, 245, 0, 0.2);
+		  background-color: #dddddd;
 		}
 		#panel th {
 		  	padding-top: 12px;
 		  	padding-bottom: 12px;
 		  	text-align: center;
 		  	width: 100%;
-		  	color: white;
+		  	color: #5c0017;
 			border-top: 1px solid rgb(92, 0, 23, 0.5);
 			border-bottom: 1px solid rgb(92, 0, 23, 0.5);
 		}
+		#form-row {
+			background-color: white;
+		}
 		#input-form {
 			width: 100%;
+		}
+		.account-input {
+			color: black;
+			border-radius: 0;
+			background-color: rgba(0,0,0,0.3);
+			border: 0;
+			width: 100px;
+			margin: 5px;
+			padding: 10px;
 		}
 		#panel-users {
 			table-layout: fixed;
@@ -388,30 +475,28 @@ body,html{
 		  	border-collapse: collapse;
 		}
 		#panel-users a {
-			color: white;
+			color: #5c0017;
 		}
 		#panel-users td {
 		  	padding: 15px 15px 15px 15px;
 		  	min-width: 20px;
-			color: white;
+			color: #5c0017;
 			overflow-x: auto;
+			border-top: 1px solid rgb(92, 0, 23);
+			border-bottom: 1px solid rgb(92, 0, 23);
 		}
 		.active-td{
-			border-right: 2px solid #5c0017;
-			border-left: 2px solid #5c0017;
-			background-color: rgb(245, 245, 0, 0.2);
+			background-color: rgb(92, 0, 23, 0.3);
 		}
 		#panel-users td:hover {
-			border-right: 2px solid #5c0017;
-			border-left: 2px solid #5c0017;
-			background-color: rgb(245, 245, 0, 0.2);
+			background-color: rgb(92, 0, 23, 0.3);
 			cursor: pointer;
 		}
 		#panel-users th {
 		  	padding-top: 12px;
 		  	padding-bottom: 12px;
 		  	text-align: left;
-		  	color: white;
+		  	color: #5c0017;
 		}
 		#panel-users {
 			table-layout: fixed;
@@ -421,38 +506,30 @@ body,html{
 
 		#panel-admin {
 			width: 100%;
+			color: #5c0017;
 		}
 		#panel-contact {
 			width: 100%;
+			color: #5c0017;
 		}
 		#panel-admin td {
 			width: 1%;
 		  	padding: 8px;
-			color: white;
 			overflow-x: auto;
 		}
 		#panel-contact td {
 		  	padding: 8px;
-			color: white;
 			overflow-x: auto;
 		}
-		#panel-admin th {
+		#panel-contact th, #panel-admin th {
 		  	padding-top: 12px;
 		  	padding-bottom: 12px;
 		  	text-align: center;
-		  	color: white;
+			border-top: 1px solid rgb(92, 0, 23);
+			border-bottom: 1px solid rgb(92, 0, 23);
 		}
-		#panel-contact th {
-		  	padding-top: 12px;
-		  	padding-bottom: 12px;
-		  	text-align: center;
-		  	color: white;
-		}
-		#panel-admin tr:hover {background-color: rgb(245, 245, 0, 0.2);}
-		#panel-contact tr:hover {background-color: rgb(245, 245, 0, 0.2);}
-		.modify-tab {
-			background-color: background-color: rgb(102, 102, 0);
-		}
+		#panel-admin tr:hover {background-color: rgb(92, 0, 23, 0.3);}
+		#panel-contact tr:hover {background-color: rgb(92, 0, 23, 0.3);}
 
 		.col-md-4.col-xl-3.chat {
 			margin: 0 0 15px 0 !important;
@@ -472,31 +549,24 @@ body,html{
 			min-width: 300px;
 			padding: 17px;
 			color: white;
-			background-color: rgb(245, 245, 0, 0.2);
-			border-right: 2px solid #5c0017;
-			border-left: 2px solid #5c0017;
-			margin: 0 0 20px 0;
-			border-radius: 0 0 10px 0;
-			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			background-color: rgb(92, 0, 23);
 		}
 		.messages .msg_container.right {
 			min-width: 220px;
 			padding: 17px;
-			background-color: rgb(245, 245, 0, 0.2);
+			background-color: rgb(92, 0, 23, 0.9);
 			margin-bottom: 40px;
 			margin-left: 200px;
-			border-radius: 0 0 0 10px;
-			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			border-radius: 10px 10px 10px 0;
 		}
 		.messages .msg_container.left {
 			display: inline-block;
 			min-width: 300px;
 			padding: 17px;
 			margin-right: 200px;
-			background-color: rgb(245, 245, 0, 0.2);
+			background-color: rgb(92, 0, 23, 0.9);
 			margin-bottom: 40px;
-			border-radius: 0 0 10px 0;
-			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			border-radius: 10px 10px 10px 0;
 		}
 
 		.msg_container_send {
@@ -530,10 +600,10 @@ body,html{
 			margin: 0 auto;
 			margin-top: 5px;
 			height: 650px;
-			border-top: 4px solid #5c0017 !important;
 			background-color: rgb(245, 245, 0, 0.4) !important;
 		}
 		.card.admins {
+			color: black;
 			height: 47.4%;
 			max-height: 330px;
 		}
@@ -552,25 +622,27 @@ body,html{
 		.card-body {
 			width: 100% !important;
 			margin: 0 auto !important;
+			background-color: white !important;
 		}
 		.contacts_body {
 			padding:  0.75rem 0 !important;
 			margin: 0 !important;
 			overflow-y: auto;
 			white-space: nowrap;
+			background-color: white !important;
 		}
 		.msg_card_body {
 			overflow-y: auto;
 		}
 		.card-header {
 			height: 65px !important;
-			border-radius: 15px 15px 0 0 !important;
-			border-bottom: 0 !important;
+			border-bottom: 2 px solid #feba29 !important;
+			background-color: #5c0017 !important;
 		}
 		.card-footer {
 		 	width: 100% !important;
-			border-radius: 0 0 15px 15px !important;
-			border-top: 0 !important;
+			background-color: #5c0017 !important;
+			border-top: 2px solid #feba29 !important;
 		}
 		.form-control {
 			width: 40% !important;
@@ -588,6 +660,12 @@ body,html{
 		
 		.form-control.type_msg {
 			max-width: 85% !important;
+		}
+		.form-control.type_msg:hover {
+			background-color: #990026 !important;
+		}
+		.form-control.type_msg:focus {
+			background-color: #990026 !important;
 		}
 		.input-group {
 			margin: 10px auto;
@@ -625,27 +703,18 @@ body,html{
 		.send_btn{
 			/* border-radius: 15px 15px 15px 15px !important; */
 			background-color: rgba(0,0,0,0.3) !important;
-			border:0 !important;
+			border: 0 !important;
 			color: white !important;
 			cursor: pointer;
 		}
 		.send_btn:hover {
-			background-color: rgb(245, 245, 0, 0.2) !important;
+			background-color: #990026 !important;
 		}
 		.search {
 			/* border-radius: 15px 0 0 15px !important; */
-			background-color: rgba(0,0,0,0.3) !important;
 			border:0 !important;
-			color:white !important;
+			color: #5c0017 !important;
 			width: 85% !important;
-		}
-		.search:hover {
-			background-color: rgb(245, 245, 0, 0.2) !important;
-		}
-		.search:focus{
-		    box-shadow:none !important;
-           	outline:0px !important;
-           	background-color: rgb(245, 245, 0, 0.2) !important;
 		}
 		.search_btn{
 			/* border-radius: 15px 15px 15px 15px !important; */
@@ -711,16 +780,11 @@ body,html{
 			background-color: #c23616 !important;
 		}
 		.user_info{
-			margin-top: auto;
-			margin-bottom: auto;
+			margin: 10px;
 		}
 		.user_info span{
 			font-size: 20px;
 			color: white;
-		}
-		.user_info p{
-		font-size: 10px;
-		color: rgba(255,255,255,0.6);
 		}
 		#action_menu_btn{
 			position: absolute;
@@ -759,24 +823,6 @@ body,html{
 			cursor: pointer;
 			background-color: rgba(0,0,0,0.2);
 		}
-		/* SCROLLBAR */
-		/* width */
-		::-webkit-scrollbar {
-		  	width: 10px;
-		}
-		/* Track */
-		::-webkit-scrollbar-track {
-		  	background: #5c0017;
-		}
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-		  	background: #33000d; 
-		}
-		/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-		  	background: #990026; 
-		}
-
 		@media(max-width: 576px){
 		.contacts_card{
 			margin-bottom: 15px !important;

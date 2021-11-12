@@ -20,6 +20,74 @@
       background: no-repeat;
     }
 
+    .banner {
+      width: 100%;
+      background-color: #5c0017;
+      overflow: auto;
+      border-bottom: #feba29 4px solid;
+    }
+
+    #wrapper_top {
+      background-color: #feba29;
+      width: 100%;
+      height: 42px;
+    }
+
+    #wrapper_top img{
+      width: 2.5%;
+      margin: 4px;
+      margin-left: 11.3%;
+      float: left;
+    }
+
+    #wrapper_top p {
+      text-align: left;
+      font-size: 13px;
+      color: #d7391f;
+      padding: 11px;
+      padding-left: 2%;
+    }
+
+    #wrapper_menu {
+      text-align: left;
+      padding: 9px;
+      margin-top: 1px;
+      background-color: #5c0017;
+      display: block;
+    }
+
+    #wrapper_menu a {
+      color: white;
+      background-color: #b3002d;
+      padding: 10px 22px 10px 22px;
+      text-decoration: none;
+    }
+
+    #wrapper_menu a:hover {
+      background-color: #800020;
+    }
+
+    #wrapper_menu .active {
+      background-color: #800020;
+      border-bottom: none;
+    }
+
+    #wrapper_menu .logout {
+      font-size: 15px;
+      background-color: red;
+      margin-left: 61.5%;
+      border-radius: 10%; 
+      padding: 3px 16px 3px 16px;
+    }
+
+    #wrapper_menu .logout:hover {
+      background-color: #b30000;
+    }
+
+    #wrapper_menu .nonclickable {
+      background-color: #5c0017;
+    }
+
     #gif-style {
       border-top: 4px solid #d7a51e;
       border-bottom: 4px solid #d7a51e;
@@ -180,12 +248,10 @@
       text-align: center;
       vertical-align: middle;
       justify-content: center;
-      padding: 100px;
+      padding: 50px;
       width: 100%;
-      color: white;
-      background-color: #5c0017;
+      color: #5c0017;
       border-bottom: 2px solid #d7a51e;
-      box-shadow: 0 5px black;
     }
     .login-header-content {
       margin-top: 220px;
@@ -238,13 +304,13 @@
 
     #navbar {
       overflow: hidden;
-      background-color: #5c0017;
-      border-bottom: 2px solid #d7a51e;
+      height: 50px;
+      border-bottom: 2px solid #5c0017;
     }
     #navbar a {
       float: right;
       display: block;
-      color: #f2f2f2;
+      color: #5c0017;
       text-align: center;
       padding: 14px;
       text-decoration: none;
@@ -252,7 +318,7 @@
     #navbar p {
       float: right;
       display: block;
-      color: #f2f2f2;
+      color: #5c0017;
       text-align: center;
       padding: 14px;
       text-decoration: none;
@@ -321,12 +387,18 @@
     }
 
     .footer {
-      border-top: 2px solid #d7a51e;
-      padding: 100px;
-      text-align: left;
-      background-color: #5c0017;
       overflow: hidden;
+    }
+    #upper-footer {
+      padding: 100px;
       color: white;
+      background-color: #5c0017;
+    }
+    #lower-footer {
+      padding: 10px;
+      font-size: 0.8em;
+      text-align: center;
+      background-color: #feba29;
     }
 
     .msger {
