@@ -4,6 +4,10 @@ Web-based A.I. Chatbot using NLP with Tensorflow for DHVSU Admission Inquiries
 
 Run launcher.py to use
 
+To login in admin side, use this account:
+username: sample admin
+password: 123
+
 
 # Current problems occuring when running Maki Bot:
 They only appear for certain reasons that can be easily avoided and not have bad effect.
