@@ -259,12 +259,21 @@
             ]
         },
         {
-            "tag": "new_tag",
+            "tag": "enrollment",
             "triggers": [
-                "ok lang po, ikaw po?"
+                "How to enroll?"
             ],
             "responses": [
-                "ok lang din"
+                "Sorry, we only do Admission related things. Consider visiting the official facebook page of DHVSU, thanks."
+            ]
+        },
+        {
+            "tag": "example_tag",
+            "triggers": [
+                "example_trigger"
+            ],
+            "responses": [
+                "example_response"
             ]
         }
     ]

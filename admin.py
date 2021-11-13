@@ -1,4 +1,6 @@
 import json
+import subprocess
+
 from functools import wraps
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
@@ -240,9 +242,10 @@ def logout():
 @app.route('/get_training_data', methods=["GET", "POST"])
 def get_training_data():
     msg = request.args.getlist('msg[]')
+    to_tag = msg[0]
+    new_tag = to_tag.replace(" ", "_")
     print(f"query: {msg[0]} - response: {msg[1]}")
-    example_tag = "new_tag"
-    new_msg = {"tag": f"{example_tag}",
+    new_msg = {"tag": f"{new_tag}",
                "triggers": [f"{msg[0]}"],
                "responses": [f"{msg[1]}"]
                }
@@ -257,7 +260,8 @@ def learn_this(new_data, filename='dialogs.json'):
         file_data["dialogs"].append(new_data)
         file.seek(0)
         json.dump(file_data, file, indent=4)
-    return 'ADMIN[LT]: Done adding to dialogs.'
+        subprocess.call("training.py", shell=True)
+    return "Currently training..."
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])

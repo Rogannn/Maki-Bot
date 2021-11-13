@@ -478,10 +478,10 @@ def disconnect_user():
 
     try:
         session.pop("logged_in")
+        session.pop("user_role")
+        session.pop("username")
     except KeyError:
         print("There is no Admin currently online.")
-    session.pop("user_role")
-    session.pop("username")
 
 
 '''@server.before_request

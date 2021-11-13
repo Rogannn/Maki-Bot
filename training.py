@@ -1,7 +1,10 @@
 import json
 import pickle
+
+import flask_socketio
 import numpy as np
 import random
+import subprocess
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
@@ -9,6 +12,7 @@ from tensorflow.keras.optimizers import SGD
 
 import nltk
 from nltk.stem import WordNetLemmatizer
+
 lemmatizer = WordNetLemmatizer()
 
 words = []
@@ -85,4 +89,3 @@ hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5,
 
 model.save('model.h5', hist)
 print("[model] finished training.")
-
