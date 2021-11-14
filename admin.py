@@ -1,5 +1,6 @@
 import json
 import subprocess
+import regex
 
 from functools import wraps
 
@@ -243,8 +244,8 @@ def logout():
 def get_training_data():
     msg = request.args.getlist('msg[]')
     to_tag = msg[0]
-    new_tag = to_tag.replace(" ", "_")
-    print(f"query: {msg[0]} - response: {msg[1]}")
+    new_tag = regex.sub('[^A-Za-z0-9]+', '', to_tag)
+    print(f"query: {msg[0]}\nresponse: {msg[1]}")
     new_msg = {"tag": f"{new_tag}",
                "triggers": [f"{msg[0]}"],
                "responses": [f"{msg[1]}"]

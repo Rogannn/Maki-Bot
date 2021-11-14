@@ -259,21 +259,30 @@
             ]
         },
         {
-            "tag": "enrollment",
+            "tag": "massofthesunis",
             "triggers": [
-                "How to enroll?"
+                "Mass of the sun is?"
             ],
             "responses": [
-                "Sorry, we only do Admission related things. Consider visiting the official facebook page of DHVSU, thanks."
+                "I don't know"
             ]
         },
         {
-            "tag": "example_tag",
+            "tag": "exampletag",
             "triggers": [
-                "example_trigger"
+                "example question"
             ],
             "responses": [
-                "example_response"
+                "example answer"
+            ]
+        },
+        {
+            "tag": "examplequestion",
+            "triggers": [
+                "example question"
+            ],
+            "responses": [
+                "example response"
             ]
         }
     ]

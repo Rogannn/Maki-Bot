@@ -1,4 +1,4 @@
-from flask import request, redirect
+from flask import request
 # use to combine each Flask app into a larger one that is dispatched based on prefix
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from main import server as flask_app_1, socket_ as main_socket
@@ -15,10 +15,11 @@ def shutdown_server():
 
 @flask_app_2.route('/shutdown', methods=['GET', 'POST'])
 def shutdown():
+    flask_app_2.route("/admin-logout")
+    time.sleep(5)
     admin_socket.stop()
     main_socket.stop()
     shutdown_server()
-    return redirect('/admin-logout')
 
 
 # access admin page through typing /admin in the url beside the localhost
