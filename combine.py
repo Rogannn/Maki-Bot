@@ -1,9 +1,18 @@
-from flask import request
-# use to combine each Flask app into a larger one that is dispatched based on prefix
+# use to combine each Flask app into one app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from flask import request
 from main import server as flask_app_1, socket_ as main_socket
 from admin import app as flask_app_2, socket_ as admin_socket
-import time
+from functools import wraps
+import os
+
+def extension(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        ...  # Extension logic
+        return flask_app_2.ensure_sync(func)(*args, **kwargs)
+
+    return wrapper
 
 
 def shutdown_server():
@@ -15,11 +24,11 @@ def shutdown_server():
 
 @flask_app_2.route('/shutdown', methods=['GET', 'POST'])
 def shutdown():
-    flask_app_2.route("/admin-logout")
-    time.sleep(5)
-    admin_socket.stop()
-    main_socket.stop()
-    shutdown_server()
+    os.system("taskkill /im msedge.exe /f")
+    os.system("taskkill /im chrome.exe /f")
+    os.system("taskkill /im firefox.exe /f")
+
+    return admin_socket.stop(), main_socket.stop(), shutdown_server()
 
 
 # access admin page through typing /admin in the url beside the localhost

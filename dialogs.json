@@ -266,24 +266,6 @@
             "responses": [
                 "I don't know"
             ]
-        },
-        {
-            "tag": "exampletag",
-            "triggers": [
-                "example question"
-            ],
-            "responses": [
-                "example answer"
-            ]
-        },
-        {
-            "tag": "examplequestion",
-            "triggers": [
-                "example question"
-            ],
-            "responses": [
-                "example response"
-            ]
         }
     ]
 }

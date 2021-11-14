@@ -15,10 +15,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body onload="checkCookie()">
-    <a href="/admin/shutdown">TEST</a>
     <div class="card-header msg_head">
         <span class="glyphicon glyphicon-plus" onclick="toggleCheckBox()" id="add-btn" title="Add messages as learning data"></span>
-        <span class="glyphicon glyphicon-ok" id="confirm-btn" title="Confirm"></span><span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
+        <a href="/admin/shutdown"><span class="glyphicon glyphicon-ok" id="confirm-btn" onclick="return confirm('Are you sure with your actions? Continuing will restart the server and will not be accessible for about 20 seconds and will close your browser. Make sure you saved all your work in your other tabs.');toggleCheckBox()" title="Confirm"></span></a>
+            <span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
         <div class="d-flex bd-highlight">
             <div class="img_cont">
             </div>
@@ -108,8 +108,11 @@
             });
             getData(test);
         });
-
     });
+
+    function closeWindow() {
+       window.location.href = "javascript:window.open('','_self').close();";
+   }
 
     function getData(message) {
         $.get("/admin/get_training_data", { 'msg[]': message }).done(function (data) {
