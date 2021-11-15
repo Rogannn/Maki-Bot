@@ -77,7 +77,6 @@
     var room = "{{ room_id }}";
     var admin = "admin";
     var bot = "chat bot";
-    var msg_state = "unseen";
 
     var msgerForm = get(".msger-inputarea");
     var msgerInput = get(".msger-input");
@@ -164,8 +163,7 @@
         socket.emit('send_message', {
             channel: room,
             message: text,
-            role: admin,
-            state: msg_state
+            role: admin
         });
       $('#message_input').val('');
     });
@@ -180,13 +178,6 @@
         } else {
             showMessageBubble(USER_NAME, USER_IMG, "left", data.message);
         }
-        
-        socket.emit('message_received', {
-            message: data.message,
-            session: data.channel,
-            role: data.role,
-            state: data.state
-        });
     });
 
     // GET THE MESSAGE TO PUT IN THE DATABASE

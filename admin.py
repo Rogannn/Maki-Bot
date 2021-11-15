@@ -354,9 +354,3 @@ def handle_send_message_event(data):
 def handle_message_alert_event(data):
     print("Message alert received in admin")
     socket_.emit('message_alert', data, broadcast=True)
-
-
-'''@app.before_request
-def make_session_permanent():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=1)'''

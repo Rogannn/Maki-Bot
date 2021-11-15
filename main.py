@@ -17,7 +17,7 @@ import bcrypt
 # nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
 
-from flask import Flask, render_template, request, session, abort, redirect
+from flask import Flask, render_template, request, session, abort, redirect, url_for
 from flask_socketio import SocketIO, join_room, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
@@ -327,7 +327,7 @@ def get_response(dial, dialogs_json):
                 result = random.choice(i['responses'])
                 break
     else:
-        handle_message_alert_event(session["email"])
+        handle_message_alert_event(session['email'])
         result = str("Thank you for your question, I contacted the Admissions Office that will answer your query. "
                      "Please wait a moment.")
 
@@ -343,11 +343,18 @@ def bot_response(msg):
 @server.route("/logout")
 def logout():
     offline_user_indicator(session["email"])
-    session.pop("google_id")
 
+    applicant_db = LoggedInUsers.query.all()
     applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
-    logged_datastore.toggle_active(applicant)
-    db.session.commit()
+
+    for a in applicant_db:
+        if a.active and a.log_user_email == session['email']:
+            logged_datastore.toggle_active(applicant)
+            db.session.commit()
+    session.pop("google_id")
+    session.pop("name")
+    session.pop("email")
+    session.pop("picture")
     return redirect("/")
 
 
@@ -368,8 +375,14 @@ def home():
 
     messages = ChatLog.query.filter(ChatLog.msg_session.endswith(user_email)).all()
     roles = ChatLog.query.filter(ChatLog.user_role.endswith("client")).all()
+    applicant_db = LoggedInUsers.query.all()
+    applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
+    for a in applicant_db:
+        if not a.active and a.log_user_email == session['email']:
+            logged_datastore.toggle_active(applicant)
+            db.session.commit()
+            online_user_indicator(user_email)
 
-    online_user_indicator(user_email)
     return render_template("home.html", room_id=user_email, roles=roles, messages=messages)
 
 
@@ -469,25 +482,19 @@ def on_join(data):
 
 @socket_.on('disconnect')
 def disconnect_user():
-    '''admin_user = AdminLogin.query.filter_by(username=session['username']).first()
-    admin_db = AdminLogin.query.all()
-    for a in admin_db:
-        if not a.active and a.username == session['username']:
-            admin_datastore.toggle_active(admin_user)
-            db.session.commit()'''
+    try:
+        print("Clearing Admin sessions..")
+        session.clear()
+        print("Clearing Admin sessions completed.")
+    except KeyError:
+        print("There is no Admin is currently online.")
 
     try:
-        session.pop("logged_in")
-        session.pop("user_role")
-        session.pop("username")
+        print("Clearing Applicant sessions..")
+        session.clear()
+        print("Clearing Applicant sessions completed.")
     except KeyError:
-        print("There is no Admin currently online.")
-
-
-'''@server.before_request
-def make_session_permanent():
-    session.permanent = True
-    server.permanent_session_lifetime = timedelta(minutes=1)'''
+        print("There is no Applicant is currently online")
 
 
 contact_security = Security(server, contact_datastore, login_form=server.route("/login"))

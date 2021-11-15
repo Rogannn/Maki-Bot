@@ -124,9 +124,6 @@
                                     <td>
                                       {{ user.username }}
                                     </td>
-                                    <td>
-                                      <span class="contact-offline-indicator">Offline</span>
-                                    </td>
                                 </tr>
                             </tbody>
                         {% endfor %}
@@ -154,9 +151,6 @@
                                     <td>
                                       {{ user.username }}
                                     </td>
-                                    <td>
-                                      <span class="admin-offline-indicator">Offline</span>
-                                    </td>
                                 </tr>
                             </tbody>
                         {% endfor %}
@@ -166,20 +160,6 @@
         </div>
     </div>
 </div>
-<div class="footer">
-    <div id="upper-footer">
-      <p>Maki Bot 2021</p>
-      <span>
-        <a class="fb-link" onclick="window.open('https://web.facebook.com/dhvsuofficeofadmissions')">DHVSU Office of Admissions</a>
-      </span>
-    </div>
-    <div id="lower-footer">
-      <span>© Don Honorio Ventura State University, 2014. All rights reserved.</span><br>
-      <span>Villa de Bacolor, Pampanga, Philippines, 2001</span><br>
-      <a href="https://dhvsu.edu.ph/index.php/dhvtsu-web-development">DHVSU-MIS Web Development Team</a>
-    </div>
-</div>
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
@@ -264,70 +244,6 @@
         }
       }
     {% endfor %}
-  {% endfor %}
-
-  var active = document.getElementsByClassName('offline-indicator');
-  var admin_active = document.getElementsByClassName('admin-offline-indicator');
-  var contact_active = document.getElementsByClassName('contact-offline-indicator');
-  socket.on("online_indicator", function(data) {
-    console.log("online_indicator is called.")
-    {% for user in logged_user %}
-      em = '{{ user.log_user_email }}';
-      if(em == data) {
-        console.log("user is online", '{{user.log_user_email}}');
-        active[{{user.id}}-1].style.color="green";
-        active[{{user.id}}-1].innerHTML="Online";
-      }
-    {% endfor %}
-  });
-
-  socket.on("offline_indicator", function(data) {
-    console.log("offline_indicator is called.")
-    {% for user in logged_user %}
-      em = '{{ user.log_user_email }}';
-      if(em == data) {
-        console.log("user is offline", '{{user.log_user_email}}');
-        active[{{user.id}}-1].style.color="#990000";
-        active[{{user.id}}-1].innerHTML="Offline";
-      }
-    {% endfor %}
-  });
-
-  {% for user in logged_user %}
-    if("{{user.active}}"=="False") {
-      active[{{user.id}}-1].style.color="#990000";
-      active[{{user.id}}-1].innerHTML="Offline";
-    } else if("{{user.active}}"=="True") {
-      console.log("{{ user.log_user_name }} is online.")
-      active[{{user.id}}-1].style.color="green";
-      active[{{user.id}}-1].innerHTML="Online";
-    }
-  {% endfor %}
-
-  var admin_list = [];
-  {% for user in admin %}
-    admin_list.push("{{ user.username }}");
-    if("{{user.active}}"=="False") {
-      console.log("{{ user.username }} is online.")
-      admin_active[admin_list.indexOf("{{ user.username }}")].style.color="green";
-      admin_active[admin_list.indexOf("{{ user.username }}")].innerHTML="Online";
-    } else if("{{user.active}}"=="True") {
-      admin_active[admin_list.indexOf("{{ user.username }}")].style.color="#990000";
-      admin_active[admin_list.indexOf("{{ user.username }}")].innerHTML="Offline";
-    }
-  {% endfor %}
-
-  var contact_list = [];
-  {% for user in contacts %}
-    contact_list.push("{{ user.username }}");
-    if("{{user.active}}"=="False") {
-      console.log("{{user.username }} is online.")
-      contact_active[contact_list.indexOf("{{ user.username }}")].style.color="green";
-      contact_active[contact_list.indexOf("{{ user.username }}")].innerHTML="Online";
-    } else if("{{user.active}}"=="True") {
-      contact_active[contact_list.indexOf("{{ user.username }}")].style.color="#990000";
-      contact_active[contact_list.indexOf("{{ user.username }}")].innerHTML="Offline";
-    }
   {% endfor %}
 
   function addPerson(name, email) {
