@@ -257,15 +257,6 @@
             "responses": [
                 "Okay!"
             ]
-        },
-        {
-            "tag": "massofthesunis",
-            "triggers": [
-                "Mass of the sun is?"
-            ],
-            "responses": [
-                "I don't know"
-            ]
         }
     ]
 }

@@ -1,16 +1,15 @@
 import json
 import pickle
+
 import numpy as np
 import random
+import nltk
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import SGD
-
-import nltk
 from nltk.stem import WordNetLemmatizer
 
-import combine
 
 lemmatizer = WordNetLemmatizer()
 

@@ -16,9 +16,9 @@
 </head>
 <body onload="checkCookie()">
     <div class="card-header msg_head">
-        <span class="glyphicon glyphicon-plus" onclick="toggleCheckBox()" id="add-btn" title="Add messages as learning data"></span>
-        <a href="/admin/shutdown"><span class="glyphicon glyphicon-ok" id="confirm-btn" onclick="return confirm('Are you sure with your actions? Continuing will restart the server and will not be accessible for about 20 seconds and will close your browser. Make sure you saved all your work in your other tabs.');toggleCheckBox()" title="Confirm"></span></a>
-            <span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
+        <span class="glyphicon glyphicon-plus" onclick="return toggleCheckBox()" id="add-btn" title="Add messages as learning data"></span>
+        <span class="glyphicon glyphicon-ok" id="confirm-btn" onclick=" return alert('Training session of Maki will start now. Then the server will not be accessible for 20 to 30 seconds. Press Ok to continue.');toggleCheckBox()" title="Confirm"></span>
+        <span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
         <div class="d-flex bd-highlight">
             <div class="img_cont">
             </div>
@@ -101,18 +101,15 @@
         // CHATLOG SCROLL
         $(".card-body.msg_card_body").scrollTop($('.card-body.msg_card_body').get(0).scrollHeight);
 
-        var test = [];
+        var checked_msg = [];
         $('#confirm-btn').click(function() {
             $("input[type=checkbox][name=selected]:checked").each(function() {
-                test.push(this.value)
+                checked_msg.push(this.value)
             });
-            getData(test);
+            getData(checked_msg);
+            toggleCheckBox();
         });
     });
-
-    function closeWindow() {
-       window.location.href = "javascript:window.open('','_self').close();";
-   }
 
     function getData(message) {
         $.get("/admin/get_training_data", { 'msg[]': message }).done(function (data) {

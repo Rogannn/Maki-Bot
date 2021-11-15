@@ -99,7 +99,7 @@
 						        <td><input name="lname" type='text' class="account-input" placeholder='Last Name' required></td>
 								    <td><input name='mail' type='email' class="account-input" placeholder='Email' required></td>
 								    <td><input type='text' name='uname' class="account-input" placeholder='Username' required></td>
-								    <td><input type='password' name='pass' class="account-input" placeholder='Password' required></td>
+								    <td><input type='password' name='pass' class="account-input" placeholder='Password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required></td>
 								    <td><button type="submit" id="submit-btn"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button></td>
 								</form>
 							</tr>
