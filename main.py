@@ -406,8 +406,12 @@ def get_bot_response():
     return bot_reply
 
 
+new_query = ""
+
+
 @server.route("/get_client_message")
 def get_client_message():
+    # GET THE APPLICANTS MESSAGE DATA TO STORE IN DATBASE
     user_message = request.args.get('message')
     user_email = session['email']
     user_name = session['name']
@@ -419,6 +423,18 @@ def get_client_message():
                         user_role=user_role)
     db.session.add(user_chat)
     db.session.commit()
+
+    # COUNT ALL MESSAGE OF THE APPLICANT TO SEND BY MAIL THE NEW QUERY
+    global new_query
+    messages = ChatLog.query.filter(ChatLog.msg_session.endswith(user_email)).all()
+    list_of_msg = []
+    for msg in messages:
+        if msg.user_role == "client":
+            list_of_msg.append(msg.message)
+    print(f"All applicant message sent: {list_of_msg}")
+    if acc < 0.8:
+        print(f"Last message sent: {list_of_msg[-1]}")
+        new_query = list_of_msg[-1]
 
     return 'Applicant message received.'
 
@@ -436,30 +452,30 @@ def handle_message_alert_event(data):
         print("Probability is below 80%.")
         print("Message alert received in main.")
         socket_.emit('message_alert', data, broadcast=True)
+
         email_to_notify = Contacts.query.all()
-        print(f'Current user is: {session["email"]}')
-
-        offline_contacts = []
+        contacts_list = []
         for user in email_to_notify:
-            if user.is_active:
-                offline_contacts.append(user.email)
+            contacts_list.append(user.email)
 
-        print(f"Contacts that are offline: {offline_contacts}")
+        print(f"Contacts List: {contacts_list}")
 
         with mail.connect() as conn:
-            for users in offline_contacts:
+            for users in contacts_list:
                 message = f"Applicant's Name: {session['name']}\n" \
+                          f"Applicant's Query: {new_query}\n" \
                           "This is a notification to inform you that an applicant has a query that Maki Bot cannot " \
                           "answer yet.\nGo to the admission website http://127.0.0.1:5000/admin/home-admin to see and " \
                           "answer the query. "
-                subject = "This is a notification to answer an applicant's query"
-                msg = Message(recipients=[users],
-                              body=message,
-                              subject=subject,
-                              sender=server.config.get("MAIL_USERNAME"))
-                conn.send(msg)
-                print(f"sent to: {users}")
-    return "sent"
+            subject = "This is a notification to answer an applicant's query"
+            msg = Message(recipients=[users],
+                          body=message,
+                          subject=subject,
+                          sender=server.config.get("MAIL_USERNAME"))
+            conn.send(msg)
+            print(f"sent to: {users}")
+
+    return "E-mail sent"
 
 
 @socket_.on('online_user')
