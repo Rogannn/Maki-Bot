@@ -13,14 +13,6 @@ To login in admin side, use this account:
 They only appear for certain reasons that can be easily avoided (this might just be happening specifically because of my 8 year old laptop).
 1. When applicant logins using google account, it will trigger a early token warning. This problem might only happen specifically on my laptop.
 
-- REASON: When I used ccleaner to clean cache of my laptop, the time gets out of sync a little bit
+- REASON: If the date and time of the device used to launch is not sync, the token warning will get triggered. My laptop's date and time always gets out of sync whenever I use ccleaner to clean my cache. 
 
-- FIX: re-sync date and time
-
-
-2. A function gets triggered for whatever reason.
-
-- REASON: idk
-
-- FIX: When its your first time running the system after turning on your computer, execute the launcher.py two times. Run, stop, and then run again
-
+- FIX: re-sync date and time.
