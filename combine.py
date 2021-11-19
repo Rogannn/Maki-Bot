@@ -11,10 +11,7 @@ from functools import wraps
 
 @flask_app_2.route('/shutdown', methods=['GET', 'POST'])
 def shutdown():
-    # os.system("taskkill /im msedge.exe /f")
-    # os.system("taskkill /im chrome.exe /f")
-    # os.system("taskkill /im firefox.exe /f")
-    test('waw')
+    test('TESTING SERVER SHUTDOWN IF WORKING..')
     request.environ.get('werkzeug.server.shutdown')
     return admin_socket.stop(), main_socket.stop(), print("Shutdown..")
 

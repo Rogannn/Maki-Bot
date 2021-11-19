@@ -261,7 +261,6 @@ def learn_this(new_data, filename='dialogs.json'):
         file_data["dialogs"].append(new_data)
         file.seek(0)
         json.dump(file_data, file, indent=4)
-        home()
     subprocess.call("training.py", shell=True)
     socket_.stop()
     return "Currently training..."

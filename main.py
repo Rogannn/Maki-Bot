@@ -290,11 +290,15 @@ def callback():
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
 
-    id_info = id_token.verify_oauth2_token(
-        id_token=credentials._id_token,
-        request=token_request,
-        audience=GOOGLE_CLIENT_ID
-    )
+    try:
+        id_info = id_token.verify_oauth2_token(
+            id_token=credentials._id_token,
+            request=token_request,
+            audience=GOOGLE_CLIENT_ID
+        )
+    except ValueError:
+        return "ValueError: Token used too early. You need to sync the date and time of the device you are using. " \
+                "\nOpen your date and time settings and then click the 'Sync now' button to sync."
 
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
