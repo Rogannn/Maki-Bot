@@ -76,7 +76,7 @@
       font-size: 15px;
       background-color: red;
       margin-left: 61.5%;
-      border-radius: 10%; 
+      border-radius: 10%;
       padding: 3px 16px 3px 16px;
     }
 
@@ -134,7 +134,7 @@
       height: 28px;
     }
 
-    .switch input { 
+    .switch input {
       opacity: 0;
       width: 0;
       height: 0;
@@ -312,7 +312,14 @@
       display: block;
       color: #5c0017;
       text-align: center;
-      padding: 14px;
+      margin: 2px;
+      padding: 10px;
+      text-decoration: none;
+    }
+    #navbar a:hover {
+      background-color: #5c0017;
+      color: white;
+      cursor: pointer;
       text-decoration: none;
     }
     #navbar p {
@@ -652,19 +659,19 @@
       0% {
         transform: rotate(0deg);
       }
-      
+
       25% {
         transform: rotate(180deg);
       }
-      
+
       50% {
         transform: rotate(180deg);
       }
-      
+
       75% {
         transform: rotate(360deg);
       }
-      
+
       100% {
         transform: rotate(360deg);
       }
@@ -674,19 +681,19 @@
       0% {
         height: 0%;
       }
-      
+
       25% {
         height: 0%;
       }
-      
+
       50% {
         height: 100%;
       }
-      
+
       75% {
         height: 100%;
       }
-      
+
       100% {
         height: 0%;
       }
