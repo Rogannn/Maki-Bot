@@ -81,20 +81,20 @@
                       <div class="img_cont">
                       </div>
                       <div class="user_info">
-                          <span> Chat Log </span> 
+                          <span> Chat Log </span>
                       </div>
                   </div>
               </div>
               <main class="card-body msg_card_body">
-                <center><h3>Click an Applicant to view their messages.</h3></center> 
+                <center><h3>Click an Applicant to view their messages.</h3></center>
                   <div class="img_cont_msg">
-                
+
                   </div>
                   <div class="messages">
                       {% for msg in messages %}
                           <div class="msg_cotainer">
                               <b> {{ msg.msg_from }} </b><br>
-                              <br> {{ msg.message }} 
+                              <br> {{ msg.message }}
                               <span class="msg_time">{{ msg.timestamp }}</span>
                           </div>
                       {% endfor %}

@@ -38,6 +38,7 @@ server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 server.config["MAIL_MAX_EMAILS"] = 30
 server.config['MAIL_USE_TLS'] = False
 server.config['MAIL_USE_SSL'] = True
+server.config['TEMPLATES_AUTO_RELOAD'] = True
 socket_ = SocketIO(server, cors_allowed_origins='*', manage_session=True)
 
 # CREATE THE DATABASE
@@ -46,12 +47,13 @@ server.config['SQLALCHEMY_BINDS'] = {
     'all_chats': 'sqlite:///db/chat_log.sqlite3',
     'to_login': 'sqlite:///db/admin_account.sqlite3',
     'to_notify': 'sqlite:///db/contacts.sqlite3',
-    'logged_in': 'sqlite:///db/logged_users.sqlite3'
+    'logged_in': 'sqlite:///db/logged_users.sqlite3',
+    'faqs': 'sqlite:///db/new_question.sqlite3'
 }
 db = SQLAlchemy(server)
 db.init_app(server)
 db.create_all(
-    bind=['all_chats', 'to_login', 'to_notify', 'logged_in'])
+    bind=['all_chats', 'to_login', 'to_notify', 'logged_in', 'faqs'])
 # SETTING UP THE MAIL OF BOT
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -79,6 +81,9 @@ logged_role_users = db.Table('logged_role_users',
 chat_role_users = db.Table('chat_role_users',
                            db.Column('chat_id', db.Integer, db.ForeignKey('chat_log.id'), primary_key=True),
                            db.Column('chat_role_id', db.Integer, db.ForeignKey('chat_role.id')))
+faqs_rel = db.Table('faqs_rel',
+                    db.Column('question_id', db.Integer, db.ForeignKey('new_question.id'), primary_key=True),
+                    db.Column('question_role_id', db.Integer, db.ForeignKey('new_question_role.id')))
 
 
 class LoggedInUsers(db.Model):
@@ -192,17 +197,42 @@ class ContactRole(db.Model, RoleMixin):
     )
 
 
+class NewQuestion(db.Model):
+    __bind_key__ = "faqs"
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(600))
+    question_created = db.Column(db.String(100))
+    active = db.Column(db.Boolean())
+    roles = db.relationship(
+        'NewQuestion',
+        secondary=faqs_rel,
+        backref=db.backref('new_question', lazy='dynamic')
+    )
+
+
+class NewQuestionRole(db.Model, RoleMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40))
+    description = db.Column(db.String(255))
+    key = db.relationship(
+        'NewQuestionRole',
+        secondary=faqs_rel,
+        backref=db.backref('new_question_role', lazy='dynamic')
+    )
+
+
 logged_datastore = SQLAlchemyUserDatastore(db, LoggedInUsers, LoggedRole)
 chat_datastore = SQLAlchemyUserDatastore(db, ChatLog, ChatRole)
 contact_datastore = SQLAlchemyUserDatastore(db, Contacts, ContactRole)
 admin_datastore = SQLAlchemyUserDatastore(db, AdminLogin, AdminRole)
+faqs_datastore = SQLAlchemyUserDatastore(db, NewQuestion, NewQuestionRole)
 
 dialogs = json.loads(open('dialogs.json').read())
 words = pickle.load(open('texts.pkl', 'rb'))
 classes = pickle.load(open('labels.pkl', 'rb'))
 
 lemmatizer = WordNetLemmatizer()
-model = load_model('model.h5')
+model = load_model('model.h5')  # LOAD THE CHATBOT MODEL CREATED AFTER TRAINING
 warnings.filterwarnings("ignore")
 
 
@@ -234,6 +264,7 @@ def predict_class(sentence, model):
     return_list = []
     for r in results:
         return_list.append({"dialog": classes[r[0]], "probability": str(r[1])})
+        print(return_list)
         global acc
         acc = r[1]
     return return_list
@@ -298,7 +329,7 @@ def callback():
         )
     except ValueError:
         return "ValueError: Token used too early. You need to sync the date and time of the device you are using. " \
-                "\nOpen your date and time settings and then click the 'Sync now' button to sync."
+               "\nOpen your date and time settings and then click the 'Sync now' button to sync."
 
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
@@ -324,13 +355,18 @@ def callback():
 def get_response(dial, dialogs_json):
     tag = dial[0]['dialog']
     list_of_intents = dialogs_json['dialogs']
+    result = "This bug is confusing. The chatbot should base its response on the accuracy if the question is in the " \
+             "dialogs or not. But the chatbot is doing neither for some reason."
     global acc
+    print(f"Accuracy is: {acc}")
     if acc > 0.9:
+        print(f"Accuracy is: {acc}")
         for i in list_of_intents:
             if i['tag'] == tag:
                 result = random.choice(i['responses'])
                 break
     else:
+        print(f"Accuracy is: {acc}")
         handle_message_alert_event(session['email'])
         result = str("Thank you for your question, I contacted the Admissions Office that will answer your query. "
                      "Please wait a moment.")
@@ -346,8 +382,6 @@ def bot_response(msg):
 
 @server.route("/logout")
 def logout():
-    offline_user_indicator(session["email"])
-
     applicant_db = LoggedInUsers.query.all()
     applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
 
@@ -394,7 +428,10 @@ def home():
 def get_bot_response():
     ''' GET MESSAGE FROM CLIENT/FRONTEND THEN GIVE BOT RESPONSE '''
     user_message = request.args.get('msg')
-    user_email = session['email']
+    try:
+        user_email = session['email']
+    except KeyError:
+        return redirect("/home")
     date = datetime.datetime.now()
     current_time = date.strftime("%c")
 
@@ -417,7 +454,10 @@ new_query = ""
 def get_client_message():
     # GET THE APPLICANTS MESSAGE DATA TO STORE IN DATBASE
     user_message = request.args.get('message')
-    user_email = session['email']
+    try:
+        user_email = session['email']
+    except KeyError:
+        return redirect("/home")
     user_name = session['name']
     user_role = "client"
     date = datetime.datetime.now()
@@ -503,14 +543,12 @@ def on_join(data):
 @socket_.on('disconnect')
 def disconnect_user():
     try:
-        print("Clearing Admin sessions..")
         session.clear()
         print("Clearing Admin sessions completed.")
     except KeyError:
         print("There is no Admin is currently online.")
 
     try:
-        print("Clearing Applicant sessions..")
         session.clear()
         print("Clearing Applicant sessions completed.")
     except KeyError:

@@ -19,7 +19,7 @@
   </div>
 </center>
 <div id="navbar">
-  <a href="/logout"> | Logout</a>
+  <a href="/logout">Logout</a>
   <img src="{{ session['picture'] }}" alt="Profile Picture">
   <p>{{ session["name"] }}</p>
 </div>
@@ -31,7 +31,7 @@
     <button class="intro-btn" onclick="window.open('/help')">Help?</button>
 </div>
 <div class="main-container">
-    <div class="msger">  
+    <div class="msger">
         <header class="msger-header">
             <div class="msger-header-title">
               <p class="help-btn-in-msger" onclick="window.open('/help')">Help?</p>
@@ -164,7 +164,7 @@
       event.preventDefault();
       if (!$('#message_input').val()) {
         alert("Input your message first!")
-        return 
+        return
       }
       var text = $('#message_input').val();
       getClientMessage(text);
@@ -231,7 +231,7 @@
     function COLGRADButton() { msgerInput.value = "College Graduate"; }
     function OTHERSButton() { msgerInput.value = "Others"; }
     // SECOND CATEGORIES
-    function triggerquery1() { 
+    function triggerquery1() {
       event.preventDefault();
       msgerInput.value = question1;
       const msgText = msgerInput.value;
@@ -241,7 +241,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery2() { 
+    function triggerquery2() {
       event.preventDefault();
       msgerInput.value = question2;
       const msgText = msgerInput.value;
@@ -251,7 +251,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery3() { 
+    function triggerquery3() {
       event.preventDefault();
       msgerInput.value = question3;
       const msgText = msgerInput.value;
@@ -261,7 +261,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery4() { 
+    function triggerquery4() {
       event.preventDefault();
       msgerInput.value = question4;
       const msgText = msgerInput.value;
@@ -271,7 +271,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery5() { 
+    function triggerquery5() {
       event.preventDefault();
       msgerInput.value = question5;
       const msgText = msgerInput.value;
@@ -281,7 +281,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery6() { 
+    function triggerquery6() {
       event.preventDefault();
       msgerInput.value = question6;
       const msgText = msgerInput.value;
@@ -291,7 +291,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery7() { 
+    function triggerquery7() {
       event.preventDefault();
       msgerInput.value = question7;
       const msgText = msgerInput.value;
@@ -301,7 +301,7 @@
       botResponse(msgText);
       msgerInput.value = "";
     }
-    function triggerquery8() { 
+    function triggerquery8() {
       event.preventDefault();
       msgerInput.value = question8;
       const msgText = msgerInput.value;
@@ -317,7 +317,7 @@
       event.preventDefault();
       window.location.reload();
     });
-  
+
     // SUBMIT TOPIC CHOICE
     topicChoices.addEventListener("submit", event => {
       event.preventDefault();
@@ -350,7 +350,9 @@
           <div class="msg-text">
             ${caption}
             <form class="topic-choices">
-              <button type="submit" id="query01" onclick="triggerquery1()">${query1}</button>
+              {% for msg in messages %}
+                <button type="submit" id="query01" onclick="triggerquery1()">{{msg.id}}</button>
+              {% endfor %}
               <button type="submit" id="query02" onclick="triggerquery2()">${query2}</button>
               <button type="submit" id="query03" onclick="triggerquery3()">${query3}</button>
               <button type="submit" id="query04" onclick="triggerquery4()">${query4}</button>

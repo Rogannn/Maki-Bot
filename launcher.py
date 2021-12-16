@@ -14,6 +14,8 @@ def get_token(q: multiprocessing.Queue) -> None:
         q.put(request.args["token"])
         return Response("", 204)
 
+    eventlet_socket = eventlet.listen((HOST, PORT))
+    eventlet.wsgi.server(eventlet_socket, application)
     run_simple(HOST, PORT, application, use_reloader=True, use_debugger=True, use_evalex=True,
                reloader_type='watchdog', threaded=True)
 

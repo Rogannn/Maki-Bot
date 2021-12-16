@@ -10,7 +10,8 @@ from sqlalchemy.exc import IntegrityError
 import datetime
 from flask_security import Security
 from flask_security.utils import hash_password, verify_password
-from main import db, ChatLog, LoggedInUsers, Contacts, AdminLogin, contact_datastore, admin_datastore, chat_datastore
+from main import db, ChatLog, LoggedInUsers, Contacts, AdminLogin, NewQuestion, contact_datastore, admin_datastore, \
+    chat_datastore, faqs_datastore
 
 app = Flask(__name__)
 app.debug = True
@@ -22,15 +23,17 @@ app.config['SECURITY_PASSWORD_SALT'] = 'ryootb97lfwkie9'
 socket_ = SocketIO(app, cors_allowed_origins='*', manage_session=True)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SQLALCHEMY_BINDS'] = {
     'all_chats': 'sqlite:///db/chat_log.sqlite3',
     'to_login': 'sqlite:///db/admin_account.sqlite3',
     'to_notify': 'sqlite:///db/contacts.sqlite3',
-    'logged_in': 'sqlite:///db/logged_users.sqlite3'
+    'logged_in': 'sqlite:///db/logged_users.sqlite3',
+    'faqs': 'sqlite:///db/new_question.sqlite3'
 }
 
 db.init_app(app)
-db.create_all(bind=['all_chats', 'to_login', 'to_notify', 'logged_in'])
+db.create_all(bind=['all_chats', 'to_login', 'to_notify', 'logged_in', 'faqs'])
 
 sec = Security()
 
@@ -250,6 +253,12 @@ def get_training_data():
                "triggers": [f"{msg[0]}"],
                "responses": [f"{msg[1]}"]
                }
+    date = datetime.datetime.now()
+    current_time = date.strftime("%c")
+    new_faq = NewQuestion(question=msg[0], question_created=current_time)
+    db.session.add(new_faq)
+    db.session.commit()
+
     learn_this(new_msg)
 
     return redirect(url_for('home'))
@@ -261,9 +270,9 @@ def learn_this(new_data, filename='dialogs.json'):
         file_data["dialogs"].append(new_data)
         file.seek(0)
         json.dump(file_data, file, indent=4)
+    print("Starting training...")
     subprocess.call("training.py", shell=True)
-    socket_.stop()
-    return "Currently training..."
+    return socket_.stop()
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])

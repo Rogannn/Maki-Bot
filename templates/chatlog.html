@@ -24,18 +24,18 @@
             </div>
             <div class="user_info">
                 {% for user in client %}
-                <span> {{ user.log_user_name }} </span> 
+                <span> {{ user.log_user_name }} </span>
                 {% endfor %}
             </div>
         </div>
         <div class="alert">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
             <strong>Reminder!</strong> If you want to add the new message as training data but you don't see the checkboxes after clicking the add button, reload the page.
         </div>
     </div>
     <main class="card-body msg_card_body">
         <div class="img_cont_msg">
-      
+
         </div>
         <div class="messages">
             {% for msg in messages %}
@@ -124,7 +124,7 @@
     socket.on('connect', socket => {
         console.log("Admin has connected.");
     });
-    var checkedValue = null; 
+    var checkedValue = null;
     var addBtn = document.getElementById("add-btn");
     var cancelBtn = document.getElementById("cancel-btn");
     var confirmBtn = document.getElementById("confirm-btn");
@@ -162,7 +162,7 @@
       if (!$('#message_input').val()) {
         // CHANGE THIS TO A MORE GOOD LOOKING POP UP WARNING
         alert("Input your message first!")
-        return 
+        return
       }
         socket.emit('send_message', {
             channel: room,

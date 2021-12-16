@@ -257,6 +257,60 @@
             "responses": [
                 "Okay!"
             ]
+        },
+        {
+            "tag": "samplequestion",
+            "triggers": [
+                "sample question"
+            ],
+            "responses": [
+                "sample answer"
+            ]
+        },
+        {
+            "tag": "aaaaaaaaaaaaaaaaaaa",
+            "triggers": [
+                "aaaaaaaaaaaaaaaaaaa"
+            ],
+            "responses": [
+                "eeeeeeeeeeeeeeeeeeee"
+            ]
+        },
+        {
+            "tag": "contacts",
+            "triggers": [
+                "contacts"
+            ],
+            "responses": [
+                "administrators"
+            ]
+        },
+        {
+            "tag": "globeathome",
+            "triggers": [
+                "globe at home"
+            ],
+            "responses": [
+                "prepaid wifi"
+            ]
+        },
+        {
+            "tag": "earnmoneyinmir4",
+            "triggers": [
+                "earn money in mir4"
+            ],
+            "responses": [
+                "get darksteel, convert to draco, sell it to wemix, then boom"
+            ]
+        },
+        {
+            "tag": "panolaruinyungthetan",
+            "triggers": [
+                "pano laruin yung thetan"
+            ],
+            "responses": [
+                "try mo para malaman mo"
+            ]
         }
     ]
 }

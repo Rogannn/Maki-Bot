@@ -22,11 +22,14 @@ six==1.15.0
 urllib3==1.26.5
 Werkzeug==2.0.1
 Werkzeug[watchdog]
+watchdog
 flask-sqlalchemy
-numpy~=1.19.5
+numpy~=1.19.2
 nltk~=3.6.1
 tensorflow~=2.5.0rc0
-pip~=21.1.2
-waitress==2.0.0
+pip
 Flask-Mail
 SQLAlchemy~=1.4.19
+bcrypt
+flask_security
+email-validator
