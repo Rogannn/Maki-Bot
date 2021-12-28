@@ -259,57 +259,30 @@
             ]
         },
         {
-            "tag": "samplequestion",
+            "tag": "11",
             "triggers": [
-                "sample question"
+                "11"
             ],
             "responses": [
-                "sample answer"
+                "12"
             ]
         },
         {
-            "tag": "aaaaaaaaaaaaaaaaaaa",
+            "tag": "3",
             "triggers": [
-                "aaaaaaaaaaaaaaaaaaa"
+                "3"
             ],
             "responses": [
-                "eeeeeeeeeeeeeeeeeeee"
+                "4"
             ]
         },
         {
-            "tag": "contacts",
+            "tag": "howtoearnmoneyinmir4",
             "triggers": [
-                "contacts"
-            ],
-            "responses": [
-                "administrators"
-            ]
-        },
-        {
-            "tag": "globeathome",
-            "triggers": [
-                "globe at home"
-            ],
-            "responses": [
-                "prepaid wifi"
-            ]
-        },
-        {
-            "tag": "earnmoneyinmir4",
-            "triggers": [
-                "earn money in mir4"
+                "how to earn money in mir4"
             ],
             "responses": [
                 "get darksteel, convert to draco, sell it to wemix, then boom"
-            ]
-        },
-        {
-            "tag": "panolaruinyungthetan",
-            "triggers": [
-                "pano laruin yung thetan"
-            ],
-            "responses": [
-                "try mo para malaman mo"
             ]
         }
     ]

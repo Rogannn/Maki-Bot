@@ -1,5 +1,7 @@
 import json
 import subprocess
+import time
+
 import regex
 
 from functools import wraps
@@ -272,7 +274,7 @@ def learn_this(new_data, filename='dialogs.json'):
         json.dump(file_data, file, indent=4)
     print("Starting training...")
     subprocess.call("training.py", shell=True)
-    return socket_.stop()
+    # socket_.stop()
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])

@@ -7,6 +7,8 @@ from tensorflow.keras.models import load_model
 
 # SETUP THE WEB PAGE
 import os
+import sys
+import time
 import pathlib
 import warnings
 import json
@@ -17,7 +19,7 @@ import bcrypt
 # nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
 
-from flask import Flask, render_template, request, session, abort, redirect, url_for
+from flask import Flask, render_template, request, session, abort, redirect
 from flask_socketio import SocketIO, join_room, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
@@ -309,6 +311,8 @@ def callback():
         flow.fetch_token(authorization_response=request.url)
     except ConnectionError:
         return "Error logging in. Your connection might be too slow. Please try reloading the page."
+    except RecursionError:
+        return redirect("/")
     # raise ConnectionError(err, request=request)
     try:
         if not session["state"] == request.args["state"]:
@@ -412,6 +416,7 @@ def home():
     user_email = session['email']
 
     messages = ChatLog.query.filter(ChatLog.msg_session.endswith(user_email)).all()
+    new_faqs = NewQuestion.query.all()
     roles = ChatLog.query.filter(ChatLog.user_role.endswith("client")).all()
     applicant_db = LoggedInUsers.query.all()
     applicant = LoggedInUsers.query.filter_by(log_user_email=session["email"]).first()
@@ -421,7 +426,7 @@ def home():
             db.session.commit()
             online_user_indicator(user_email)
 
-    return render_template("home.html", room_id=user_email, roles=roles, messages=messages)
+    return render_template("home.html", room_id=user_email, roles=roles, messages=messages, new_faqs=new_faqs)
 
 
 @server.route("/get")

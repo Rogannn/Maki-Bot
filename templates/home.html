@@ -326,13 +326,15 @@
       appendMessage(USER_NAME, USER_IMG, "right", msgText);
       msgerInput.value = "";
       if (msgText == "Junior High School") {
-        addCategories("Junior High School, choose below which question you want to be answered.", question1, question2, question3, question4, question5);
+        addCategories("You chosed Junior High School, choose below which question you want to be answered.", question1, question2, question3, question4, question5);
       } else if (msgText == "Senior High School") {
-        addCategories("Senior High School, choose below which question you want to be answered.", question1, question2, question3, question4, question5);
+        addCategories("You chosed Senior High School, choose below which question you want to be answered.", question1, question2, question3, question4, question5);
       } else if (msgText == "College") {
-        addCategories("College, choose below which question you want to be answered.", question1, question2, question3, question4, question5, question6);
+        addCategories("You chosed College, choose below which question you want to be answered.", question1, question2, question3, question4, question5, question6);
       } else if (msgText == "College Graduate") {
-        addCategories("College Graduate, choose below which question you want to be answered.", question1, question2, question3, question4, question5, question6, question7, question8);
+        addCategories("You chosed College Graduate, choose below which question you want to be answered.", question1, question2, question3, question4, question5, question6, question7, question8);
+      } else if (msgText == "Others"){
+        categoryOthers("You chosed Others, choose below which question you want to be answered.");
       } else {
         botResponse(msgText);
       }
@@ -350,9 +352,7 @@
           <div class="msg-text">
             ${caption}
             <form class="topic-choices">
-              {% for msg in messages %}
-                <button type="submit" id="query01" onclick="triggerquery1()">{{msg.id}}</button>
-              {% endfor %}
+              <button type="submit" id="query01" onclick="triggerquery1()">${query2}</button>
               <button type="submit" id="query02" onclick="triggerquery2()">${query2}</button>
               <button type="submit" id="query03" onclick="triggerquery3()">${query3}</button>
               <button type="submit" id="query04" onclick="triggerquery4()">${query4}</button>
@@ -407,6 +407,40 @@
       } else {
         document.getElementById('query08').style.visibility = 'visible';
       }
+    }
+
+    function newQuery(question) {
+      event.preventDefault();
+      msgerInput.value = question;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client);
+      if (!msgText) return;
+      getClientMessage(msgText);
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+
+    function categoryOthers(caption) {
+      var msgHTML = `
+      <div class="msg left-msg">
+        <div class="msg-img" style='background-image: url("../static/styles/images/bot-icon.png")'></div>
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">Maki Bot</div>
+          </div>
+          <div class="msg-text">
+            ${caption}
+            <form class="topic-choices">
+              {% for q in new_faqs %}
+                <button type="submit" id="query01" onclick="newQuery('{{q.question}}')">{{q.question}}</button>
+              {% endfor %}
+            </form>
+            If you have a question that is not included, you can send your question below and wait for the answer from the Admission if I cannot answer your question.
+          </div>
+        </div>
+      </div>`;
+      msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+      msgerChat.scrollTop += 500;
     }
 
     // MESSAGE BUBBLE
