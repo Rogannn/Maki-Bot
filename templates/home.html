@@ -14,8 +14,8 @@
 <body>
 <center>
   <div class="banner">
-    <img src="../static/styles/images/dhvsu.png" style="width: 10%;">
-    <img src="../static/styles/images/dhvsu_banner.jpg">
+    <img src="../static/styles/images/dhvsu.png" style="width: 10%;" alt="DHVSU Logo">
+    <img src="../static/styles/images/dhvsu_banner.jpg" alt="DHVSU Banner">
   </div>
 </center>
 <div id="navbar">
@@ -167,8 +167,7 @@
         return
       }
       var text = $('#message_input').val();
-      getClientMessage(text);
-      newMessage(text, client);
+      newMessage(text, client, USER_NAME);
       if(makibot_enabled == true) {
         botResponse(text);
       }
@@ -187,11 +186,12 @@
     });
 
     // SEND THE MESSAGE THROUGH SOCKET
-    function newMessage(text, from) {
+    function newMessage(text, from, name) {
       socket.emit('send_message', {
           channel: room,
           message: text,
-          role: from
+          role: from,
+          username: name
       });
     }
 
@@ -225,100 +225,23 @@
 
     // BUTTONS
     // FIRST CATEGORIES
-    function JHSButton() { msgerInput.value = "Junior High School"; }
-    function SHSButton() { msgerInput.value = "Senior High School"; }
-    function COLButton() { msgerInput.value = "College"; }
-    function COLGRADButton() { msgerInput.value = "College Graduate"; }
-    function OTHERSButton() { msgerInput.value = "Others"; }
-    // SECOND CATEGORIES
-    function triggerquery1() {
-      event.preventDefault();
-      msgerInput.value = question1;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
+    function JHSButton() { 
+      msgerInput.value = "Junior High School";
     }
-    function triggerquery2() {
-      event.preventDefault();
-      msgerInput.value = question2;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
+    function SHSButton() { 
+      msgerInput.value = "Senior High School";
     }
-    function triggerquery3() {
-      event.preventDefault();
-      msgerInput.value = question3;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
+    function COLButton() { 
+      msgerInput.value = "College";
     }
-    function triggerquery4() {
-      event.preventDefault();
-      msgerInput.value = question4;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
+    function COLGRADButton() { 
+      msgerInput.value = "College Graduate";
     }
-    function triggerquery5() {
-      event.preventDefault();
-      msgerInput.value = question5;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
-    }
-    function triggerquery6() {
-      event.preventDefault();
-      msgerInput.value = question6;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
-    }
-    function triggerquery7() {
-      event.preventDefault();
-      msgerInput.value = question7;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
-    }
-    function triggerquery8() {
-      event.preventDefault();
-      msgerInput.value = question8;
-      const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
-      getClientMessage(msgText);
-      botResponse(msgText);
-      msgerInput.value = "";
+    function OTHERSButton() { 
+      msgerInput.value = "Others";
     }
 
-    // RESET BUTTON
-    $(".reset-button").on('click', function() {
-      event.preventDefault();
-      window.location.reload();
-    });
-
-    // SUBMIT TOPIC CHOICE
+    // SUBMIT CHOICE
     topicChoices.addEventListener("submit", event => {
       event.preventDefault();
       const msgText = msgerInput.value;
@@ -338,6 +261,86 @@
       } else {
         botResponse(msgText);
       }
+    });
+
+    // SECOND CATEGORIES
+    function triggerquery1() {
+      event.preventDefault();
+      msgerInput.value = question1;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery2() {
+      event.preventDefault();
+      msgerInput.value = question2;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery3() {
+      event.preventDefault();
+      msgerInput.value = question3;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery4() {
+      event.preventDefault();
+      msgerInput.value = question4;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery5() {
+      event.preventDefault();
+      msgerInput.value = question5;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery6() {
+      event.preventDefault();
+      msgerInput.value = question6;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery7() {
+      event.preventDefault();
+      msgerInput.value = question7;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+    function triggerquery8() {
+      event.preventDefault();
+      msgerInput.value = question8;
+      const msgText = msgerInput.value;
+      newMessage(msgText, client, USER_NAME);
+      if (!msgText) return;
+      botResponse(msgText);
+      msgerInput.value = "";
+    }
+
+    // RESET BUTTON
+    $(".reset-button").on('click', function() {
+      event.preventDefault();
+      window.location.reload();
     });
 
     // ADD CATEGORIES
@@ -408,18 +411,26 @@
         document.getElementById('query08').style.visibility = 'visible';
       }
     }
-
-    function newQuery(question) {
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    function newQueryRespond(question) {
       event.preventDefault();
       msgerInput.value = question;
       const msgText = msgerInput.value;
-      newMessage(msgText, client);
-      if (!msgText) return;
+      newMessage(msgText, client, USER_NAME);
       getClientMessage(msgText);
-      botResponse(msgText);
+      if (!msgText) return;
       msgerInput.value = "";
+      {% for faqs in new_faqs %}
+        if(msgText == "{{ faqs.question }}") {
+          newMessage("{{ faqs.answer }}", bot, BOT_NAME);
+          getFaqAnswer("{{ faqs.answer }}");
+        }
+      {% endfor %}
     }
 
+    // List of questions for 'others' option
     function categoryOthers(caption) {
       var msgHTML = `
       <div class="msg left-msg">
@@ -432,7 +443,7 @@
             ${caption}
             <form class="topic-choices">
               {% for q in new_faqs %}
-                <button type="submit" id="query01" onclick="newQuery('{{q.question}}')">{{q.question}}</button>
+                <button type="submit" id="query01" onclick="newQueryRespond('{{q.question}}')">{{q.question}}</button>
               {% endfor %}
             </form>
             If you have a question that is not included, you can send your question below and wait for the answer from the Admission if I cannot answer your question.
@@ -460,21 +471,26 @@
       msgerChat.scrollTop += 500;
     }
 
+    // GET THE CLIENT MESSAGE TO PUT IN THE DATABASE
+    function getClientMessage(rawText,) {
+        $.get("/get_client_message", { message: rawText }).done(function (data) {
+            console.log(data);
+        });
+    }
+    function getFaqAnswer(rawText,) {
+        $.get("/get_faq_message", { message: rawText }).done(function (data) {
+            console.log(data);
+        });
+    }
+
     // BOT RESPONSE
     function botResponse(rawText) {
       $.get("/get", { msg: rawText }).done(function (data) {
         console.log(rawText);
         console.log(data);
         const msgText = data;
-        newMessage(msgText, bot)
+        newMessage(msgText, bot, BOT_NAME)
       });
-    }
-
-    // GET THE CLIENT MESSAGE TO PUT IN THE DATABASE
-    function getClientMessage(rawText,) {
-        $.get("/get_client_message", { message: rawText }).done(function (data) {
-            console.log(data);
-        });
     }
 
     // Utils

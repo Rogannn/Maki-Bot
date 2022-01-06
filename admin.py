@@ -255,13 +255,14 @@ def get_training_data():
                "triggers": [f"{msg[0]}"],
                "responses": [f"{msg[1]}"]
                }
+    # ADD TO DATABASE
     date = datetime.datetime.now()
     current_time = date.strftime("%c")
-    new_faq = NewQuestion(question=msg[0], question_created=current_time)
+    new_faq = NewQuestion(question=msg[0], answer=msg[1], question_created=current_time)
     db.session.add(new_faq)
     db.session.commit()
 
-    learn_this(new_msg)
+    # learn_this(new_msg)
 
     return redirect(url_for('home'))
 
@@ -274,7 +275,6 @@ def learn_this(new_data, filename='dialogs.json'):
         json.dump(file_data, file, indent=4)
     print("Starting training...")
     subprocess.call("training.py", shell=True)
-    # socket_.stop()
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])

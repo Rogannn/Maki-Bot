@@ -203,6 +203,7 @@ class NewQuestion(db.Model):
     __bind_key__ = "faqs"
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(600))
+    answer = db.Column(db.String(600))
     question_created = db.Column(db.String(100))
     active = db.Column(db.Boolean())
     roles = db.relationship(
@@ -486,6 +487,28 @@ def get_client_message():
         new_query = list_of_msg[-1]
 
     return 'Applicant message received.'
+
+
+@server.route("/get_faq_message")
+def get_faq_answer():
+    answer = request.args.get('message')
+    try:
+        user_email = session['email']
+    except KeyError:
+        return redirect("/home")
+    date = datetime.datetime.now()
+    current_time = date.strftime("%c")
+
+    bot_name = 'Maki Bot'
+    bot_role = "chat bot"
+
+    ''' RECORD THE MESSAGE AND WHO IT CAME FROM IN THE CHAT USERS AND CHAT LOGS DATABASE '''
+    bot_message = ChatLog(message=answer, timestamp=current_time, msg_from=bot_name, msg_session=user_email,
+                          user_role=bot_role)
+    db.session.add(bot_message)
+    db.session.commit()
+
+    return "Answer of bot by faq is now also stored in database."
 
 
 @socket_.on('send_message')
