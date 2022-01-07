@@ -8,6 +8,14 @@ To login in admin side, use this account:
 - username: sample admin
 - password: 123
 
+# How to install and use
+1. Download the zip file
+2. Unzip the file to a path you desire.
+3. Open cmd(in administrator mode to be sure).
+4. Type and enter pip install -r requirements.txt
+5. Type and enter nltk.download('popular')
+6. Type and enter server.py
+7. Type in your browser's url the server.
 
 # Current problems occuring when running Maki Bot:
 They only appear for certain reasons that can be easily avoided (this might just be happening specifically because of my 8 year old laptop).
