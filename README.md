@@ -12,12 +12,15 @@ To login in admin side, use this account:
 1. Download the zip file
 2. Unzip the file to a path you desire.
 3. Open cmd(in administrator mode to be sure).
-4. Type and enter the path to the file ex. cd C:\Users\YourUserName\to\path\Maki-Bot
-- Skip 5 and 6 if you don't want to use virtual environment for pip installs
+4. Type and enter the path to the file ex. cd C:\Users\YourUserName\to\path\Maki-Bot-main
+- If you want to use a virtual environment, do this:
 5. Type and enter cd env, cd scripts, activate
-6. Type and enter pip install -r C:\users\rogel\desktop\makitest\requirements.txt
+6. Type and enter pip install -r C:\users\rogel\desktop\Maki-Bot-main\requirements.txt
+- If you do not want to use a virtual environment, do this:
 7. Type and enter pip install -r requirements.txt
+- Download the nltk(optional)
 8. Type and enter nltk.download('popular')
+- Access the website
 9. Type and enter server.py
 10. Type in your browser's url the server.
 
