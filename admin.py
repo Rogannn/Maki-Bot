@@ -258,9 +258,10 @@ def get_training_data():
     # ADD TO DATABASE
     date = datetime.datetime.now()
     current_time = date.strftime("%c")
-    new_faq = NewQuestion(question=msg[0], answer=msg[1], question_created=current_time)
+    new_faq = NewQuestion(question=msg[0], answer=msg[1], date_created=current_time)
     db.session.add(new_faq)
     db.session.commit()
+    print("[SERVER]The query and response should now be added to database.")
 
     learn_this(new_msg)
 

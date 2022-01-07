@@ -284,6 +284,15 @@
             "responses": [
                 "try mo para malaman mo"
             ]
+        },
+        {
+            "tag": "newtestquery",
+            "triggers": [
+                "new test query"
+            ],
+            "responses": [
+                "new test answer"
+            ]
         }
     ]
 }
