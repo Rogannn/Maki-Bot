@@ -24,7 +24,7 @@ Werkzeug~=2.0.2
 Werkzeug[watchdog]
 watchdog
 flask-sqlalchemy
-numpy~=1.19.2
+numpy~=1.21
 nltk~=3.6.1
 tensorflow~=2.5.0rc0
 pip~=21.1.2
