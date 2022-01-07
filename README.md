@@ -6,7 +6,7 @@ Run launcher.py to use
 
 To login in admin side, use this account:
 - username: sample admin
-- password: 123
+- password: Samplepassword123
 
 # How to install and use
 1. Download the zip file
