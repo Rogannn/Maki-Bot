@@ -35,3 +35,4 @@ flask_security
 email-validator
 regex~=2021.11.10
 tornado~=6.1
+flup~=1.0.3

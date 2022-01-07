@@ -17,7 +17,7 @@
 <body onload="checkCookie()">
     <div class="card-header msg_head">
         <span class="glyphicon glyphicon-plus" onclick="return toggleCheckBox()" id="add-btn" title="Add messages as learning data"></span>
-        <span class="glyphicon glyphicon-ok" id="confirm-btn" onclick=" return alert('Training session of Maki will start now. Then the server will not be accessible for 20 to 30 seconds. Press Ok to continue.');toggleCheckBox()" title="Confirm"></span>
+        <span class="glyphicon glyphicon-ok" id="confirm-btn" onclick=" return alert('Done choosing for the messages. Press Ok to continue.');toggleCheckBox()" title="Confirm"></span>
         <span class="glyphicon glyphicon-remove" onclick="toggleCheckBox()" id="cancel-btn" title="Cancel"></span>
         <div class="d-flex bd-highlight">
             <div class="img_cont">
@@ -30,7 +30,7 @@
         </div>
         <div class="alert">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <strong>Reminder!</strong> If you want to add the new message as training data but you don't see the checkboxes after clicking the add button, reload the page.
+            <strong>Reminder!</strong> If you want to add the new messages but you don't see the checkboxes after clicking the add button, reload the page.
         </div>
     </div>
     <main class="card-body msg_card_body">

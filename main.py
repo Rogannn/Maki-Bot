@@ -204,7 +204,7 @@ class NewQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(600))
     answer = db.Column(db.String(600))
-    question_created = db.Column(db.String(100))
+    date_created = db.Column(db.String(100))
     active = db.Column(db.Boolean())
     roles = db.relationship(
         'NewQuestion',
@@ -443,6 +443,7 @@ def get_bot_response():
 
     bot_name = 'Maki Bot'
     bot_reply = bot_response(user_message)
+    print(f"[SERVER]MakiBot said: {bot_reply}")
     bot_role = "chat bot"
 
     ''' RECORD THE MESSAGE AND WHO IT CAME FROM IN THE CHAT USERS AND CHAT LOGS DATABASE '''
@@ -450,6 +451,7 @@ def get_bot_response():
                           user_role=bot_role)
     db.session.add(bot_message)
     db.session.commit()
+    print("[SERVER]The MakiBot data should now be added to the database.")
     return bot_reply
 
 
@@ -460,6 +462,7 @@ new_query = ""
 def get_client_message():
     # GET THE APPLICANTS MESSAGE DATA TO STORE IN DATBASE
     user_message = request.args.get('message')
+    print(f"[SERVER]Client said: {user_message}")
     try:
         user_email = session['email']
     except KeyError:
@@ -473,6 +476,7 @@ def get_client_message():
                         user_role=user_role)
     db.session.add(user_chat)
     db.session.commit()
+    print("[SERVER]The Client data should now be added to the database.")
 
     # COUNT ALL MESSAGE OF THE APPLICANT TO SEND BY MAIL THE NEW QUERY
     global new_query

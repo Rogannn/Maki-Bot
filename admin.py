@@ -262,7 +262,7 @@ def get_training_data():
     db.session.add(new_faq)
     db.session.commit()
 
-    # learn_this(new_msg)
+    learn_this(new_msg)
 
     return redirect(url_for('home'))
 
@@ -274,7 +274,7 @@ def learn_this(new_data, filename='dialogs.json'):
         file.seek(0)
         json.dump(file_data, file, indent=4)
     print("Starting training...")
-    subprocess.call("training.py", shell=True)
+    # subprocess.call("training.py", shell=True)
 
 
 @app.route("/delete_contact/<contact_id>", methods=["GET", "POST"])
@@ -301,6 +301,7 @@ def get_admin_message():
     user_email = request.args.get('email')
 
     admin_message = request.args.get('message')
+    print(f"[SERVER]Admin said: {admin_message}")
     admin_name = "ADMISSION ADMIN"
     admin_role = "admin"
     current_time = datetime.datetime.now()
@@ -309,6 +310,7 @@ def get_admin_message():
                          msg_session=user_email, user_role=admin_role)
     db.session.add(admin_chat)
     db.session.commit()
+    print("[SERVER]The Admin data should now be added to the database.")
 
     return admin_message
 
