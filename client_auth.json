@@ -7,8 +7,7 @@
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_secret": "jvMKbAy2TYNBvw9uewxzs9tL",
     "redirect_uris": [
-      "https://77ae-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback",
-      "http://127.0.0.1:5000/callback"
+      "https://0f26-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback"
     ]
   }
 }

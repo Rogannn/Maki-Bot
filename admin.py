@@ -152,21 +152,18 @@ def show_message(email):
     roles = ChatLog.query.with_entities(ChatLog.user_role)
     client = LoggedInUsers.query.filter(LoggedInUsers.log_user_email.endswith(email)).all()
 
-    chat_user = ChatLog.query.filter_by(msg_session=email).first()
-    if chat_user.active == 1:
-        chat_datastore.toggle_active(chat_user)
-
     # count messages of an applicant with maki bot
     list_of_msg = []
     for msg in messages:
         list_of_msg.append(msg.id)
-    print(len(list_of_msg))
+    print(f"Message count: {len(list_of_msg)}")
+    msg_count = len(list_of_msg)
 
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         template_name = 'chatlog.html'
     else:
         template_name = 'home-admin.html'
-    return render_template(template_name, messages=messages, room_id=email, roles=roles, client=client)
+    return render_template(template_name, messages=messages, room_id=email, roles=roles, client=client, msg_count=msg_count)
 
 
 @app.route("/contact-account", methods=["GET", "POST"])

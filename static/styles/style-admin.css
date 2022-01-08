@@ -395,7 +395,11 @@ body,html {
 			color: red;
 			margin: 0 auto;
 		}
-
+		#no-messages-sign {
+			color: #5c0017;
+			display: flex;
+			justify-content: center;
+		}
 		#submit-btn {
 			border: 0;
 			margin-left: 5px;

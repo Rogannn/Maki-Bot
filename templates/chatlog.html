@@ -57,6 +57,9 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            {% if msg_count == 0 %}
+                <h1 id="no-messages-sign">No messages yet!</h1>
+            {% endif %}
         </div>
     </main>
     <div class="card-footer">

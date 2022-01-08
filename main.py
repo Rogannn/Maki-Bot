@@ -283,7 +283,7 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="http://127.0.0.1:5000/callback"
+    redirect_uri="https://0f26-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback"
 )
 '''REPLACE THE redirect_uri="http://127.0.0.1:5000/callback" WHEN USING DIFFERENT ONE'''
 '''IF YOU ARE USING THE ngrok, ADD THE FORWARDED URI THAT ENDS WITH ngrok.io'''
@@ -331,7 +331,7 @@ def callback():
           f"[CALLBACK]Current session: {request.args['state']}")
     try:
         if not session["state"] == request.args["state"]:
-            abort(500)  # when state does not match
+            # abort(500)  # when state does not match
             flash("An error occurred. Try logging in again.")
             print("[CALLBACK]An error occurred. This might be a session mismatch.")
             return redirect("/")
@@ -449,37 +449,12 @@ def home():
     return render_template("home.html", room_id=user_email, roles=roles, messages=messages, new_faqs=new_faqs)
 
 
-@server.route("/get")
-def get_bot_response():
-    ''' GET MESSAGE FROM CLIENT/FRONTEND THEN GIVE BOT RESPONSE '''
-    user_message = request.args.get('msg')
-    try:
-        user_email = session['email']
-    except KeyError:
-        return redirect("/home")
-    date = datetime.datetime.now()
-    current_time = date.strftime("%c")
-
-    bot_name = 'Maki Bot'
-    bot_reply = bot_response(user_message)
-    print(f"[SERVER]MakiBot said: {bot_reply}")
-    bot_role = "chat bot"
-
-    ''' RECORD THE MESSAGE AND WHO IT CAME FROM IN THE CHAT USERS AND CHAT LOGS DATABASE '''
-    bot_message = ChatLog(message=bot_reply, timestamp=current_time, msg_from=bot_name, msg_session=user_email,
-                          user_role=bot_role)
-    db.session.add(bot_message)
-    db.session.commit()
-    print("[SERVER]The MakiBot data should now be added to the database.")
-    return bot_reply
-
-
 new_query = ""
 
 
 @server.route("/get_client_message")
 def get_client_message():
-    # GET THE APPLICANTS MESSAGE DATA TO STORE IN DATBASE
+    # GET THE APPLICANTS MESSAGE DATA TO STORE IN DATABASE
     user_message = request.args.get('message')
     print(f"[SERVER]Client said: {user_message}")
     try:
@@ -510,6 +485,31 @@ def get_client_message():
         new_query = list_of_msg[-1]
 
     return 'Applicant message received.'
+
+
+@server.route("/get")
+def get_bot_response():
+    ''' GET MESSAGE FROM CLIENT/FRONTEND THEN GIVE BOT RESPONSE '''
+    user_message = request.args.get('msg')
+    try:
+        user_email = session['email']
+    except KeyError:
+        return redirect("/home")
+    date = datetime.datetime.now()
+    current_time = date.strftime("%c")
+
+    bot_name = 'Maki Bot'
+    bot_reply = bot_response(user_message)
+    print(f"[SERVER]MakiBot said: {bot_reply}")
+    bot_role = "chat bot"
+
+    ''' RECORD THE MESSAGE AND WHO IT CAME FROM IN THE CHAT USERS AND CHAT LOGS DATABASE '''
+    bot_message = ChatLog(message=bot_reply, timestamp=current_time, msg_from=bot_name, msg_session=user_email,
+                          user_role=bot_role)
+    db.session.add(bot_message)
+    db.session.commit()
+    print("[SERVER]The MakiBot data should now be added to the database.")
+    return bot_reply
 
 
 @server.route("/get_faq_message")

@@ -26,10 +26,14 @@
 
 <div class="intro">
     <h2>Maki Bot</h2>
-    <p><b>Maki</b> can answer your admission related queries quickly but using only english language. But instead of typing, you can choose first on which categories you are and then you can select which queries you want an answer with just by clicking them.<br><br> If your question is not included, you can type your question in the textbox and send it so that Maki Bot will notify the Admission's Office and you can wait for them to answer your question.<br><br>To use Maki Bot, click the 'Ask Now!' button.<br>To know how to use Maki Bot, click the 'help' button.</p>
+    <p><b>Maki</b> can answer your admission related queries quickly but using only english language. But instead of typing, you can choose first on which categories you are and then you can select which queries you want an answer with just by clicking them.<br><br> 
+    Make sure that you look for the question on the categories first!<br>
+    Example: If you are a Junior High School, simply click the button that MakiBot shows you that says Junior High School then choose for a question that you want an answer with.<br>
+    And if have a question that is not included, click the reset button and then choose the "Others" button to look if your question is already there. <br><br>
+    If your question is not included, you can type your question in the textbox and send it so that Maki Bot will notify the Admission's Office and you can wait for them to answer your question.<br><br>To use Maki Bot, click the 'Ask Now!' button.<br>To know how to use Maki Bot, click the 'help' button.</p>
+    <p>REMINDER: MakiBot cannot take a random conversations because its only goal is to answer Admission related inquiries. Maybe in the future!</p>
     <button class="intro-btn" onclick="scrollToChat()">Ask now!</button>
     <button class="intro-btn" onclick="window.open('/help')">Help?</button>
-    <p>Reminder: MakiBot cannot take a random conversations because its only goal is to answer Admission related inquiries as its the only goal for its creation. </p>
 </div>
 <div class="main-container">
     <div class="msger">
@@ -93,7 +97,7 @@
                         <div class="msg-info-name">Maki Bot</div>
                       </div>
                       <div class="msg-text">
-                        Greetings. My name is Maki, I am here to answer your queries. Please choose a category below and click what you want to inquire about. If the question you are looking for is not in the choices, please type it in the text box below.
+                        Greetings. My name is Maki, I am here to answer your queries. Please choose a category below and click what you want to inquire about. Choose 'Others' if your question is not included in other categories.
                         <form class="topic-choices">
                           <button type="submit" id="msg-jhs" onclick="JHSButton()">Junior High School</button>
                           <button type="submit" id="msg-shs" onclick="SHSButton()">Senior High School</button>
