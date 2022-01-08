@@ -29,6 +29,13 @@
 			Login
 		</div>
 		<div class="login-content">
+			{% with messages = get_flashed_messages() %}
+	        {% if messages %}
+	                {% for message in messages %}
+	                    <span class="login_message_flash">{{ message }}</span>
+	                {% endfor %}
+	        {% endif %}
+	    {% endwith %}<br>
 			Use your google account
 			<a href="/login"><button class="login-button"><i class="fab fa-google"></i>Login</button></a>
 		</div>

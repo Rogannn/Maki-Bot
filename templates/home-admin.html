@@ -63,7 +63,6 @@
                             <tbody>
                                 <tr>
                                     <td class="toggle-btn" onclick="$('.card.chat').load('{{ url_for('show_message', email=user.log_user_email) }}'); location.href='#applicant={{ user.log_user_email }}'">
-                                      <span class="offline-indicator">Offline</span>
                                       <span class="glyphicon glyphicon-exclamation-sign"></span>
                                       {{ user.log_user_name }} <p class="email"> {{ user.log_user_email }} </p>
                                     </td>

@@ -259,30 +259,19 @@
             ]
         },
         {
-            "tag": "howtoearnmoneyinmir4",
+            "tag": "laughing",
             "triggers": [
-                "how to earn money in mir4"
+                "ahaha",
+                "hahaha",
+                "funny",
+                "laugh",
+                "lol",
+                "rofl",
+                "lmao",
+                "lfmao"
             ],
             "responses": [
-                "get darksteel, convert to draco, sell it to wemix, then boom"
-            ]
-        },
-        {
-            "tag": "panolaruinyungthetan",
-            "triggers": [
-                "pano laruin yung thetan"
-            ],
-            "responses": [
-                "pano laruin yung thetan"
-            ]
-        },
-        {
-            "tag": "panolaruinyungthetan",
-            "triggers": [
-                "pano laruin yung thetan"
-            ],
-            "responses": [
-                "try mo para malaman mo"
+                "If you are finished here, you can logout now. Thank you."
             ]
         },
         {

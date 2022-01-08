@@ -20,6 +20,11 @@
       background: no-repeat;
     }
 
+    .login_message_flash{
+      text-align: left;
+      color: red;
+      margin: 0 auto;
+    }
     .banner {
       width: 100%;
       background-color: #5c0017;
@@ -193,7 +198,7 @@
     .intro {
       text-align: center;
       width: 80%;
-      min-width: 484px;
+      min-width: 450px;
       padding: 20px 50px 140px 50px;
       margin: 0 auto;
       color: white;
@@ -414,7 +419,7 @@
       justify-content: space-between;
       width: 60%;
       max-width: 867px;
-      min-width: 484px;
+      min-width: 450px;
       margin: 25px auto;
       height: calc(100% - 50px);
       border: var(--border);

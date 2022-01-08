@@ -3,6 +3,7 @@ import pickle
 import random
 
 import numpy as np
+import oauthlib.oauth2.rfc6749.errors
 from tensorflow.keras.models import load_model
 
 # SETUP THE WEB PAGE
@@ -17,11 +18,12 @@ import bcrypt
 # nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
 
-from flask import Flask, render_template, request, session, abort, redirect
+from flask import Flask, render_template, request, session, abort, redirect, flash
 from flask_socketio import SocketIO, join_room, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
+from flask_ngrok import run_with_ngrok
 
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
@@ -29,6 +31,7 @@ from pip._vendor import cachecontrol
 
 server = Flask(__name__)
 server.debug = True
+run_with_ngrok(server)
 server.static_folder = 'static'
 server.config['SECRET_KEY'] = 'ntcmm7xqp2ujkjr'
 server.config['SESSION_TYPE'] = 'filesystem'
@@ -282,6 +285,9 @@ flow = Flow.from_client_secrets_file(
             "openid"],
     redirect_uri="http://127.0.0.1:5000/callback"
 )
+'''REPLACE THE redirect_uri="http://127.0.0.1:5000/callback" WHEN USING DIFFERENT ONE'''
+'''IF YOU ARE USING THE ngrok, ADD THE FORWARDED URI THAT ENDS WITH ngrok.io'''
+'''DO NOT FORGET THE /callback AT THE END AND ADD THE URI TO THE OAUTH CLIENT DEV WEBSITE'''
 
 
 # prevent unauthorized users
@@ -311,12 +317,27 @@ def callback():
     except ConnectionError:
         return "Error logging in. Your connection might be too slow. Please try reloading the page."
     except RecursionError:
+        flash("An error occurred. Try logging in again.")
+        print("[CALLBACK]An error occurred while someone was trying to login using their google account."
+              "The error is called RecursionError.")
+        return redirect("/")
+    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+        flash("An error occurred. Try logging in again.")
+        print("[CALLBACK]An error occurred while someone was trying to login using their google account."
+              "The error is called MismatchingStateError.")
         return redirect("/")
     # raise ConnectionError(err, request=request)
+    print(f"[CALLBACK]Session of currently logging in: {session['state']}\n"
+          f"[CALLBACK]Current session: {request.args['state']}")
     try:
         if not session["state"] == request.args["state"]:
             abort(500)  # when state does not match
+            flash("An error occurred. Try logging in again.")
+            print("[CALLBACK]An error occurred. This might be a session mismatch.")
+            return redirect("/")
     except KeyError:
+        flash("An error occurred. Try logging in again.")
+        print("[CALLBACK]An error occurred. KeyError.")
         return redirect("/")
 
     credentials = flow.credentials
