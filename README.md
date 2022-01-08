@@ -5,7 +5,7 @@ Web-based Inquiry Chatbot using NLP with Tensorflow for DHVSU Admission Inquirie
 Run launcher.py to use
 
 To login in admin side, use this account:
-- username: sample admin
+- username: admin1
 - password: Samplepassword123
 
 # How to install and use
