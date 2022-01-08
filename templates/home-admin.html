@@ -155,7 +155,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script type="text/javascript">
 
-    var socket = io.connect('http://' + document.domain + ":" + location.port);
+    var socket = io.connect('https://' + document.domain + ":" + location.port);
     var room = "{{ room_id }}";
     // CONNECT
     socket.on('connect', socket => {
@@ -228,9 +228,9 @@
   {% for user in logged_user %}
     {% for t in test %}
       if("{{ t.msg_session }}"=="{{ user.log_user_email }}") {
-        if("{{ t.active }}"=="True"){
+        if("{{ t.active }}"=="false"){
           document.getElementsByClassName('glyphicon-exclamation-sign')[{{user.id}}-1].style.color="darkred";
-        } else if ("{{ t.active }}"=="false"){
+        } else if ("{{ t.active }}"=="True"){
           document.getElementsByClassName('glyphicon-exclamation-sign')[{{user.id}}-1].style.color="darkgray";
         }
       }

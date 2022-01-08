@@ -283,7 +283,7 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="https://0f26-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback"
+    redirect_uri="https://39e1-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback"
 )
 '''REPLACE THE redirect_uri="http://127.0.0.1:5000/callback" WHEN USING DIFFERENT ONE'''
 '''IF YOU ARE USING THE ngrok, ADD THE FORWARDED URI THAT ENDS WITH ngrok.io'''

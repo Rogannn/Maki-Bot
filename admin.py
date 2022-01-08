@@ -163,7 +163,8 @@ def show_message(email):
         template_name = 'chatlog.html'
     else:
         template_name = 'home-admin.html'
-    return render_template(template_name, messages=messages, room_id=email, roles=roles, client=client, msg_count=msg_count)
+    return render_template(template_name, messages=messages, room_id=email, roles=roles, client=client,
+                           msg_count=msg_count)
 
 
 @app.route("/contact-account", methods=["GET", "POST"])
