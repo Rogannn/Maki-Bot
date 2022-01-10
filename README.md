@@ -9,7 +9,7 @@ To login in admin side, use this account:
 - password: Samplepassword123
 
 # How to install and use
-- Make sure that you have Python and pip installed on your computer
+- Make sure that you have Python and pip installed on your computer and the path is configured.
 1. Download the zip file
 2. Unzip the file to a path you desire.
 3. Open cmd(in administrator mode to be sure).
