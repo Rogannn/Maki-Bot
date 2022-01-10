@@ -14,16 +14,13 @@ To login in admin side, use this account:
 2. Unzip the file to a path you desire.
 3. Open cmd(in administrator mode to be sure).
 4. Type and enter the path to the file ex. cd C:\Users\Rogel\desktop\Maki-Bot-main
-- If you want to use a virtual environment, do this:
-5. Type and enter cd env, cd scripts, activate
-6. Type and enter pip install -r C:\users\rogel\desktop\Maki-Bot-main\requirements.txt
-- If you do not want to use a virtual environment, do this:
-7. Type and enter pip install -r requirements.txt
+- Install the external python libraries (its on you if you want to use virtual environment or not)
+6. Type and enter pip install -r requirements.txt
 - Download the nltk(optional)
-8. Type and enter nltk.download('popular')
+7. Type and enter nltk.download('popular')
 - Access the website
-9. Type and enter server.py
-10. Type in your browser's url the server.
+8. Type and enter server.py
+9. Type in your browser's url the server.
 
 # Current problems occuring when running Maki Bot:
 They only appear for certain reasons that can be easily avoided (this might just be happening specifically because of my 8 year old laptop).
