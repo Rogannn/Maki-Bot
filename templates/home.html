@@ -133,7 +133,7 @@
   <script type="text/javascript">
 
     // CONNECTION TO SERVER
-    var socket = io.connect('https://' + document.domain + ":" + location.port);
+    var socket = io.connect('http://' + document.domain + ":" + location.port);
 
     socket.on('connect', socket => {
       console.log("Client has connected.");
@@ -163,15 +163,22 @@
     var client = "client";
     var bot = "chat bot";
     var room = "{{ room_id }}";
-    // SEND USER MESSAGE
+
+    // APPLICANT WILL SEND MESSAGE HERE
     var makibot_enabled = true;
     $('#send-user-msg').on('click', function() {
       event.preventDefault();
       if (!$('#message_input').val()) {
-        alert("Input your message first!")
+        alert("Input your message first before trying to send it!")
         return
       }
       var text = $('#message_input').val();
+      // NOT LET THE MESSAGE CONTAIN ONLY WHITESPACES
+      if (!text.replace(/\s/g, '').length) {
+        alert("Input your message properly!")
+        $('#message_input').val('');
+        return
+      }
       newMessage(text, client, USER_NAME);
       getClientMessage(text);
       if(makibot_enabled == true) {

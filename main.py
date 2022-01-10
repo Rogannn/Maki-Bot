@@ -23,7 +23,6 @@ from flask_socketio import SocketIO, join_room, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
-from flask_ngrok import run_with_ngrok
 
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
@@ -31,7 +30,6 @@ from pip._vendor import cachecontrol
 
 server = Flask(__name__)
 server.debug = True
-run_with_ngrok(server)
 server.static_folder = 'static'
 server.config['SECRET_KEY'] = 'ntcmm7xqp2ujkjr'
 server.config['SESSION_TYPE'] = 'filesystem'
@@ -283,7 +281,7 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="https://39e1-2001-fd8-506-4eb8-3d79-e9ba-9c13-f6a3.ngrok.io/callback"
+    redirect_uri="https://makibot.loca.lt/callback"
 )
 '''REPLACE THE redirect_uri="http://127.0.0.1:5000/callback" WHEN USING DIFFERENT ONE'''
 '''IF YOU ARE USING THE ngrok, ADD THE FORWARDED URI THAT ENDS WITH ngrok.io'''
@@ -295,6 +293,7 @@ def login_is_required(function):
     def wrapper(*args, **kwargs):
         # this method should not be used in production
         if "google_id" not in session:
+            flash("Login first!")
             return redirect("/")
             # return abort(401)
         else:
@@ -326,7 +325,6 @@ def callback():
         print("[CALLBACK]An error occurred while someone was trying to login using their google account."
               "The error is called MismatchingStateError.")
         return redirect("/")
-    # raise ConnectionError(err, request=request)
     print(f"[CALLBACK]Session of currently logging in: {session['state']}\n"
           f"[CALLBACK]Current session: {request.args['state']}")
     try:
@@ -379,8 +377,7 @@ def callback():
 def get_response(dial, dialogs_json):
     tag = dial[0]['dialog']
     list_of_intents = dialogs_json['dialogs']
-    result = "This bug is confusing. The chatbot should base its response on the accuracy if the question is in the " \
-             "dialogs or not. But the chatbot is doing neither for some reason."
+    result = ""
     global acc
     print(f"Accuracy is: {acc}")
     if acc > 0.9:
@@ -541,7 +538,7 @@ def handle_send_message_event(data):
 
 @socket_.on('message_received')
 def handle_message_alert_event(data):
-    if acc < 0.8:
+    if acc < 0.9:
         chat_user = ChatLog.query.filter_by(msg_session=session['email']).first()
         chat_datastore.toggle_active(chat_user)
         print("Probability is below 80%.")
@@ -560,8 +557,8 @@ def handle_message_alert_event(data):
                 message = f"Applicant's Name: {session['name']}\n" \
                           f"Applicant's Query: {new_query}\n" \
                           "This is a notification to inform you that an applicant has a query that Maki Bot cannot " \
-                          "answer yet.\nGo to the admission website http://127.0.0.1:5000/admin/home-admin to see and " \
-                          "answer the query. "
+                          "answer yet.\nGo to the admission website http://127.0.0.1:5000/admin/home-admin to see " \
+                          "and answer the query. "
             subject = "This is a notification to answer an applicant's query"
             msg = Message(recipients=[users],
                           body=message,

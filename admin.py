@@ -32,7 +32,6 @@ app.config['SQLALCHEMY_BINDS'] = {
     'logged_in': 'sqlite:///db/logged_users.sqlite3',
     'faqs': 'sqlite:///db/new_question.sqlite3'
 }
-
 db.init_app(app)
 db.create_all(bind=['all_chats', 'to_login', 'to_notify', 'logged_in', 'faqs'])
 
