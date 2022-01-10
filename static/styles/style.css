@@ -96,7 +96,7 @@
     #gif-style {
       height: auto;
       width: 60%;
-      min-width: 450px;
+      min-width: 390px;
       border-top: 4px solid #d7a51e;
       border-bottom: 4px solid #d7a51e;
       border-right: 4px solid #5c0017;
@@ -124,7 +124,7 @@
 
     .help-container {
       width: 70%;
-      min-width: 450px;
+      min-width: 390px;
       margin: 50px auto;
     }
     .choice-btn {
@@ -201,7 +201,7 @@
     .intro {
       text-align: center;
       width: 80%;
-      min-width: 450px;
+      min-width: 380px;
       padding: 20px 50px 140px 50px;
       margin: 0 auto;
       color: white;
@@ -422,7 +422,7 @@
       justify-content: space-between;
       width: 60%;
       max-width: 867px;
-      min-width: 450px;
+      min-width: 400px;
       margin: 25px auto;
       height: calc(100% - 50px);
       border: var(--border);
