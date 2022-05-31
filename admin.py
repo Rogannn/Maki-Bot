@@ -127,6 +127,9 @@ def home():
     ''' FOR ALERTING NEW QUERY '''
     msg_email = [msg.msg_session for msg in ChatLog.query.all()]
     msg_answered = [msg.active for msg in ChatLog.query.all()]
+    for msg in msg_answered:
+        if msg:
+            print(f"[HOME-ADMIN]: New Message? -> {msg}")
 
     ''' COMPUTING TOTAL NUMBERS OF ALL ACCOUNTS '''
     admin_count = []
@@ -150,6 +153,11 @@ def show_message(email):
     messages = ChatLog.query.filter(ChatLog.msg_session.endswith(email)).all()
     roles = ChatLog.query.with_entities(ChatLog.user_role)
     client = LoggedInUsers.query.filter(LoggedInUsers.log_user_email.endswith(email)).all()
+
+    msg_answered = [msg.active for msg in ChatLog.query.all()]
+    for msg in msg_answered:
+        if msg:
+            print(f"[CHAT_LOG]: New Message? -> {msg}")
 
     # count messages of an applicant with maki bot
     list_of_msg = []

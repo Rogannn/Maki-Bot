@@ -8,3 +8,7 @@ application = DispatcherMiddleware(flask_app_1, {
     '/admin': flask_app_2
 })
 
+print("To go to the admin side of the website, go to 127.0.0.1:5000/admin \n"
+      "To login, type this: \n"
+      "Username: admin1 \n"
+      "Password: Samplepassword123 \n")

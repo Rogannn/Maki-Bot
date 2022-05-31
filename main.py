@@ -18,7 +18,7 @@ import bcrypt
 # nltk.download('popular')
 from nltk.stem import WordNetLemmatizer
 
-from flask import Flask, render_template, request, session, abort, redirect, flash
+from flask import Flask, render_template, request, session, redirect, flash
 from flask_socketio import SocketIO, join_room, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
@@ -281,10 +281,9 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="https://makibot.loca.lt/callback"
+    redirect_uri="http://127.0.0.1:5000/callback"
 )
 '''REPLACE THE redirect_uri="http://127.0.0.1:5000/callback" WHEN USING DIFFERENT ONE'''
-'''IF YOU ARE USING THE ngrok, ADD THE FORWARDED URI THAT ENDS WITH ngrok.io'''
 '''DO NOT FORGET THE /callback AT THE END AND ADD THE URI TO THE OAUTH CLIENT DEV WEBSITE'''
 
 
